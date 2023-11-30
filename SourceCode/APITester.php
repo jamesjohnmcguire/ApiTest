@@ -4,7 +4,7 @@
  * API Test
  *
  * Description: An end to end API tester.
- * Version:     1.0.1
+ * Version:     1.0.2
  * PHP version: 8.1.1
  *
  * @category  PHP
@@ -12,7 +12,7 @@
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
  * @copyright 2023 James John McGuire <jamesjohnmcguire@gmail.com>
  * @license   MIT https://opensource.org/licenses/MIT
- * @version   1.0.1
+ * @version   1.0.2
  * @link      https://github.com/jamesjohnmcguire/MassMailer
  */
 
