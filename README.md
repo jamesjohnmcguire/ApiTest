@@ -9,6 +9,9 @@ Please :star: star this project!
 
 * [PHP >= 8.1.1](http://php.net/)
 
+This requirement could potentially be relaxed to older version of PHP upon request.
+
+
 ## Installation
 ### Git
 git clone https://github.com/jamesjohnmcguire/ApiTest
