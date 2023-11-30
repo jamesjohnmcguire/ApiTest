@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace DotPix\MassMailer\Tests;
+namespace DigitalZenWorks\ApiTest;
 
 /**
  * Page Tester class.
