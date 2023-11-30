@@ -13,13 +13,15 @@ Please :star: star this project!
 ### Git
 git clone https://github.com/jamesjohnmcguire/ApiTest
 
+### Composer
+composer require --dev https://packagist.org/packages/digitalzenworks/api-test
 
 ## Usage:
 
-There is one class with one main method.  You can call it like this:
+There is one main class with one main method.  You can call it like this:
 
 ```php
-require_once  'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use DigitalZenWorks\ApiTest\ApiTester;
 
