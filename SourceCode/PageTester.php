@@ -39,7 +39,7 @@ class PageTester extends APITester
 		string $requestDataType = 'text/HTML',
 		string $responseDataType = 'text/HTML')
 	{
-		parent::__contstruct($host, $requestDataType, $responseDataType);
+		parent::__construct($host, $requestDataType, $responseDataType);
 	}
 
 	/**
