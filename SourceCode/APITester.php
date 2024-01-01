@@ -159,7 +159,8 @@ class APITester
 		catch (\Exception $exception)
 		{
 			// Not expecting any general exceptions.
-			$this->displayException($exception, false);
+			$class = get_class($exception);
+			echo "Unexpected Exception class: $class\r\n";
 		}
 
 		return $responseContent;
