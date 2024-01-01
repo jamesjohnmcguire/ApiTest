@@ -140,6 +140,15 @@ class APITester
 				$options = [];
 			}
 
+			if ($this->responseDataType === 'application/json')
+			{
+				$expectedJson = true;
+			}
+			else
+			{
+				$expectedJson = false;
+			}
+
 			if ($isError === true)
 			{
 				// Disable throwing exceptions on an HTTP protocol errors.
@@ -150,8 +159,8 @@ class APITester
 			$response = $this->client->send($request, $options);
 
 			self::CheckStatus($response, $isError);
-			$responseContent =
-				self::CheckBody($response, $isError, $errorRequired);
+			$responseContent = self::CheckBody(
+				$response, $expectedJson, $isError, $errorRequired);
 		}
 		// Guzzle high level super class exception.
 		catch (BadResponseException $exception)
@@ -179,6 +188,11 @@ class APITester
 	 * @param \Psr\Http\Message\ResponseInterface $response      The PSR7
 	 *                                                           response
 	 *                                                           object.
+	 * @param boolean                             $expectedJson  Indicates
+	 *                                                           whether the
+	 *                                                           body is
+	 *                                                           expected to be
+	 *                                                           json or not.
 	 * @param boolean                             $isError       Indicates
 	 *                                                           whether an
 	 *                                                           error is
@@ -195,14 +209,22 @@ class APITester
 	 */
 	private static function CheckBody(
 		ResponseInterface $response,
+		bool $expectedJson = true,
 		bool $isError = false,
 		bool $errorRequired = true) : mixed
 	{
 		$stream = $response->getBody();
 		$body = $stream->getContents();
 
-		assertJson($body);
-		$data = json_decode($body);
+		if ($expectedJson === true)
+		{
+			assertJson($body);
+			$data = json_decode($body);
+		}
+		else
+		{
+			$data = $body;
+		}
 
 		assertNotEmpty($data);
 
