@@ -285,7 +285,10 @@ class APITester
 		bool $isError)
 	{
 		$class = get_class($exception);
-		echo "exception class: $class\r\n";
+		echo "Exception class: $class\r\n";
+		$message = $exception->message;
+		$code = $exception->code;
+		echo "Exception code: $code\t$message\r\n";
 
 		$response = $exception->getResponse();
 
