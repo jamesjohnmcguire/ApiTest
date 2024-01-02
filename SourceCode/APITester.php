@@ -286,23 +286,29 @@ class APITester
 	{
 		$class = get_class($exception);
 		echo "Exception class: $class\r\n";
-		$message = $exception->message;
-		$code = $exception->code;
-		echo "Exception code: $code\t$message\r\n";
 
-		$response = $exception->getResponse();
-
-		$exists = !empty($response);
+	    $exists = $exception->hasResponse();
 
 		if ($exists === true)
 		{
-			$body = $response->getBody();
-			$contents = $body->getContents();
-			print_r($contents);
-		}
-		else
-		{
-			echo "WARNING: Empty exception object\r\n";
+			$response = $exception->getResponse();
+
+			$message = $response->getReasonPhrase();
+			$code = $response->getStatusCode();
+			echo "Exception code: $code\t$message\r\n";
+
+			$exists = !empty($response);
+
+			if ($exists === true)
+			{
+				$body = $response->getBody();
+				$contents = $body->getContents();
+				print_r($contents);
+			}
+			else
+			{
+				echo "WARNING: Empty exception object\r\n";
+			}
 		}
 
 		assertTrue($isError);
