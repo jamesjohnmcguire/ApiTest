@@ -5,7 +5,6 @@
  *
  * Description: An end to end API tester.
  * Version:     1.0.7
- * PHP version: 8.1.1
  *
  * @category  PHP
  * @package   APITest
