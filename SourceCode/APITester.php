@@ -92,17 +92,20 @@ class APITester
 	/**
 	 * Test API end point method.
 	 *
-	 * @param string                $method        The HTTP method to use.
-	 * @param string                $endPoint      The API end point.
-	 * @param null | array | string $data          The JSON data to process.
-	 * @param boolean               $multiPartData Data is multipart form data.
-	 *                                             Implying some of the data
-	 *                                             may be binary.
-	 * @param boolean               $isError       Indicates whether an error
-	 *                                             is expected or not.
-	 * @param boolean               $errorRequired Indicates whether an error
-	 *                                             field is expected in the
-	 *                                             response or not.
+	 * @param string                $method          The HTTP method to use.
+	 * @param string                $endPoint        The API end point.
+	 * @param null | array | string $data            The JSON data to process.
+	 * @param boolean               $multiPartData   Data is multipart form
+	 *                                               data. Implying some of
+	 *                                               the data may be binary.
+	 * @param boolean               $isError         Indicates whether an error
+	 *                                               is expected or not.
+	 * @param boolean               $errorRequired   Indicates whether an error
+	 *                                               field is expected in the
+	 *                                               response or not.
+	 * @param boolean               $contentRequired Indicates whether content
+	 *                                               is required in the response
+	 *                                               body.
 	 *
 	 * @return mixed
 	 */
@@ -112,7 +115,8 @@ class APITester
 		null | array | string $data,
 		bool $multiPartData = false,
 		bool $isError = false,
-		bool $errorRequired = true) : mixed
+		bool $errorRequired = true,
+		bool $contentRequired = true) : mixed
 	{
 		$responseContent = null;
 
@@ -159,7 +163,11 @@ class APITester
 
 			self::CheckStatus($response, $isError);
 			$responseContent = self::CheckBody(
-				$response, $expectedJson, $isError, $errorRequired);
+				$response,
+				$expectedJson,
+				$isError,
+				$errorRequired,
+				$contentRequired);
 		}
 		// Guzzle high level super class exception.
 		catch (BadResponseException $exception)
@@ -184,25 +192,16 @@ class APITester
 	/**
 	 * Check body method.
 	 *
-	 * @param \Psr\Http\Message\ResponseInterface $response      The PSR7
-	 *                                                           response
-	 *                                                           object.
-	 * @param boolean                             $expectedJson  Indicates
-	 *                                                           whether the
-	 *                                                           body is
-	 *                                                           expected to be
-	 *                                                           json or not.
-	 * @param boolean                             $isError       Indicates
-	 *                                                           whether an
-	 *                                                           error is
-	 *                                                           expected or
-	 *                                                           not.
-	 * @param boolean                             $errorRequired Indicates
-	 *                                                           whether an
-	 *                                                           error field is
-	 *                                                           expected in the
-	 *                                                           response or
-	 *                                                           not.
+	 * @param ResponseInterface $response        The PSR7 response object.
+	 * @param boolean           $expectedJson    Indicates whether the body is
+	 *                                           expected to be json or not.
+	 * @param boolean           $isError         Indicates whether an error is
+	 *                                           expected or not.
+	 * @param boolean           $errorRequired   Indicates whether an error
+	 *                                           field is expected in the
+	 *                                           response or not.
+	 * @param boolean           $contentRequired Indicates whether content is
+	 *                                           required in the response body.
 	 *
 	 * @return mixed
 	 */
@@ -210,7 +209,8 @@ class APITester
 		ResponseInterface $response,
 		bool $expectedJson = true,
 		bool $isError = false,
-		bool $errorRequired = true) : mixed
+		bool $errorRequired = true,
+		bool $contentRequired = true) : mixed
 	{
 		$stream = $response->getBody();
 		$body = $stream->getContents();
@@ -225,7 +225,10 @@ class APITester
 			$data = $body;
 		}
 
-		assertNotEmpty($data);
+		if ($contentRequired === true)
+		{
+			assertNotEmpty($data);
+		}
 
 		if ($isError === false)
 		{
