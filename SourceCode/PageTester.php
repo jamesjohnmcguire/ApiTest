@@ -27,21 +27,6 @@ namespace DigitalZenWorks\ApiTest;
 class PageTester extends APITester
 {
 	/**
-	 * Constructor method.
-	 *
-	 * @param string $host             The host for the tests.
-	 * @param string $requestDataType  The request data type.
-	 * @param string $responseDataType The response data type.
-	 */
-	public function __construct(
-		string $host,
-		string $requestDataType = 'text/HTML',
-		string $responseDataType = 'text/HTML')
-	{
-		parent::__construct($host, $requestDataType, $responseDataType);
-	}
-
-	/**
 	 * Test API end point method.
 	 *
 	 * @param string                $method        The HTTP method to use.

@@ -122,7 +122,7 @@ class APITester
 
 		try
 		{
-			if ($data != null)
+			if ($data !== null)
 			{
 				if ($this->requestDataType === 'application/json')
 				{
@@ -289,7 +289,7 @@ class APITester
 		$class = get_class($exception);
 		echo "Exception class: $class\r\n";
 
-	    $exists = $exception->hasResponse();
+		$exists = $exception->hasResponse();
 
 		if ($exists === true)
 		{
