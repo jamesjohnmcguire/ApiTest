@@ -20,15 +20,15 @@
 
 	<description>A custom set of code standard rules.</description>
 
+	<exclude-pattern>vendor</exclude-pattern>
+
 	<!-- Check all files in this directory and the directories below it. -->
 	<file>.</file>
 
-	<exclude-pattern>vendor</exclude-pattern>
-
 	<rule ref="Generic.Files.LineLength">
 		<properties>
-			<property name="lineLimit" value="180"/>
-			<property name="absoluteLineLimit" value="0"/>
+			<property name="lineLimit" value="80"/>
+			<property name="absoluteLineLimit" value="120"/>
 		</properties>
 	</rule>
 
@@ -42,6 +42,7 @@
 	<rule ref="Generic">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 		<exclude name="Generic.Classes.OpeningBraceSameLine.BraceOnNewLine"/>
+		<exclude name="Generic.ControlStructures.DisallowYodaConditions.Found"/>
 		<exclude name="Generic.Files.EndFileNoNewline.Found"/>
 		<exclude name="Generic.Files.LowercasedFilename.NotFound"/>
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSame"/>
@@ -63,6 +64,8 @@
 		<exclude name="PEAR.Commenting.ClassComment.MissingPackageTag"/>
 		<exclude name="PEAR.Commenting.FileComment.IncompleteLicense"/>
 		<exclude name="PEAR.Commenting.FileComment.InvalidVersion"/>
+		<exclude name="PEAR.Commenting.FileComment.MissingCategoryTag"/>
+		<exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
 		<exclude name="PEAR.ControlStructures.ControlSignature.Found"/>
 		<exclude name="PEAR.ControlStructures.MultiLineCondition.CloseBracketNewLine"/>
 		<exclude name="PEAR.ControlStructures.MultiLineCondition.NewlineBeforeOpenBrace"/>
@@ -79,8 +82,7 @@
 		<exclude name="PEAR.WhiteSpace.ScopeIndent.IncorrectExact"/>
 	</rule>
 
-	<rule ref="PHPCompatibility">
-	</rule>
+	<rule ref="PHPCompatibility" />
 
 	<rule ref="PSR1">
 		<exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
@@ -103,13 +105,17 @@
 		<exclude name="Squiz.Arrays.ArrayDeclaration.NoCommaAfterLast"/>
 		<exclude name="Squiz.Arrays.ArrayDeclaration.SingleLineNotAllowed"/>
 		<exclude name="Squiz.Commenting.ClosingDeclarationComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.AuthorTagOrder"/>
+		<exclude name="Squiz.Commenting.FileComment.CopyrightTagOrder"/>
 		<exclude name="Squiz.Commenting.FileComment.IncorrectAuthor"/>
 		<exclude name="Squiz.Commenting.FileComment.IncorrectCopyright"/>
 		<exclude name="Squiz.Commenting.FileComment.MissingSubpackageTag"/>
 		<exclude name="Squiz.Commenting.FileComment.PackageTagOrder"/>
 		<exclude name="Squiz.Commenting.FileComment.SpacingAfterOpen"/>
 		<exclude name="Squiz.Commenting.FileComment.SubpackageTagOrder"/>
+		<exclude name="Squiz.Commenting.LongConditionClosingComment.Invalid"/>
 		<exclude name="Squiz.Commenting.LongConditionClosingComment.Missing"/>
+		<exclude name="Squiz.Commenting.LongConditionClosingComment.SpacingBefore"/>
 		<exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"/>
 		<exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis"/>
 		<exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword"/>
