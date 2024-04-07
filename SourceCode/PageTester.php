@@ -1,12 +1,8 @@
 <?php
 
 /**
- * API Test
+ * An end to end Page tester.
  *
- * Description: An end to end API tester.
- * Version:     1.1.8
- *
- * @category  PHP
  * @package   APITest
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
  * @copyright 2023 - 2024 James John McGuire <jamesjohnmcguire@gmail.com>
