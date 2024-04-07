@@ -8,7 +8,7 @@
  * @copyright 2023 - 2024 James John McGuire <jamesjohnmcguire@gmail.com>
  * @license   MIT https://opensource.org/licenses/MIT
  * @version   1.1.8
- * @link      https://github.com/jamesjohnmcguire/MassMailer
+ * @link      https://github.com/jamesjohnmcguire/ApiTest
  */
 
 declare(strict_types=1);
