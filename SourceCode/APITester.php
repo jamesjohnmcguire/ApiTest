@@ -120,18 +120,19 @@ class APITester
 		{
 			if ($data !== null)
 			{
-				if ($this->requestDataType === 'application/json')
+				if ($multiPartData === true)
 				{
-					$options = ['body' => $data];
+					$options = ['multipart' => $data];
 				}
-				elseif ($multiPartData === false)
+				elseif ($this->requestDataType === 'application/json')
 				{
 					// Normal form data.
 					$options = ['form_params' => $data];
 				}
 				else
 				{
-					$options = $data;
+					// Why not $options = $data;?
+					$options = ['body' => $data];
 				}
 			}
 			else
