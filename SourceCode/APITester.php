@@ -7,7 +7,7 @@
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
  * @copyright 2023 - 2024 James John McGuire <jamesjohnmcguire@gmail.com>
  * @license   MIT https://opensource.org/licenses/MIT
- * @version   1.1.9
+ * @version   1.2.10
  * @link      https://github.com/jamesjohnmcguire/ApiTest
  */
 
