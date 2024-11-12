@@ -122,17 +122,13 @@ class APITester
 			{
 				if ($multiPartData === true)
 				{
+					// Multipart - Usually forms with file uploads.
 					$options = ['multipart' => $data];
-				}
-				elseif ($this->requestDataType === 'application/json')
-				{
-					// Normal form data.
-					$options = ['form_params' => $data];
 				}
 				else
 				{
-					// Why not $options = $data;?
-					$options = ['body' => $data];
+					// Normal form data.
+					$options = ['form_params' => $data];
 				}
 			}
 			else
