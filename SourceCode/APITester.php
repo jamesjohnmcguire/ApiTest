@@ -91,9 +91,14 @@ class APITester
 	 * @param string                $method          The HTTP method to use.
 	 * @param string                $endPoint        The API end point.
 	 * @param null | array | string $data            The JSON data to process.
-	 * @param boolean               $multiPartData   Data is multipart form
-	 *                                               data. Implying some of
-	 *                                               the data may be binary.
+	 * @param boolean | string      $dataType        The data type.  True, if it
+	 *                                               is multipart form data.
+	 *                                               Implying some of the data
+	 *                                               may be binary. If it is a
+	 *                                               string, the string
+	 *                                               indicates the type of data
+	 *                                               ('body', 'json',
+	 *                                               'form_params').
 	 * @param boolean               $isError         Indicates whether an error
 	 *                                               is expected or not.
 	 * @param boolean               $errorRequired   Indicates whether an error
@@ -109,7 +114,7 @@ class APITester
 		string $method,
 		string $endPoint,
 		null | array | string $data,
-		bool $multiPartData = false,
+		bool | string $dataType = false,
 		bool $isError = false,
 		bool $errorRequired = true,
 		bool $contentRequired = true) : mixed
@@ -120,15 +125,24 @@ class APITester
 		{
 			if ($data !== null)
 			{
-				if ($multiPartData === true)
+				if ($dataType === true)
 				{
 					// Multipart - Usually forms with file uploads.
 					$options = ['multipart' => $data];
 				}
 				else
 				{
-					// Normal form data.
-					$options = ['form_params' => $data];
+					$isString = is_string($dataType);
+
+					if ($isString === true)
+					{
+						$options = [$dataType => $data];
+					}
+					else
+					{
+						// Normal form data.
+						$options = ['form_params' => $data];
+					}
 				}
 			}
 			else
