@@ -1,10 +1,2 @@
-Integrate with Gawa
 Rename repo	ApiTest	to PhpApiTest?
 Add Automated Tests with http://httpbin.org/ ?
-	figure out postData / jsonData thing
-	Set $jsonData with default of null?
-	Set flag for json specfic data?
-Call to undefined method PHPUnit\Framework\ExpectationFailedException::getResponse()
-GuzzleHttp\Client::send(): Argument #2 ($options) must be of type array, null given, called in digitalzenworks-irdi\vendor\digitalzenworks\api-test\SourceCode\APITester.php on line 146
-PHPUnit\Framework\Assert::assertContains(): Argument #2 ($haystack) must be of type iterable, string given, called in Irdi\Tests\PageTests.php on line 100
-ArgumentCountError: Too few arguments to function DigitalZenWorks\IrdiTheme\Tests\PageTests::testPage(), 0 passed in digitalzenworks-irdi\vendor\phpunit\phpunit\src\Framework\TestCase.php on line 1115 and exactly 1 expected
