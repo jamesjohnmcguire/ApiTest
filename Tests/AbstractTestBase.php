@@ -1,17 +1,14 @@
 <?php
 
 /**
- * Mass Mailer
+ * An end to end API tester.
  *
- * Description: Mass Mailer PHP Library.
- *
- * @category  PHPWebService
- * @package   MassMailer
+ * @package   APITest
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
- * @copyright 2023 - 2024 by DotPix
- * @license   Proprietary
- * @version   1.5.34
- * @link      https://github.com/jamesjohnmcguire/MassMailer
+ * @copyright 2023 - 2024 James John McGuire <jamesjohnmcguire@gmail.com>
+ * @license   MIT https://opensource.org/licenses/MIT
+ * @version   1.4.12
+ * @link      https://github.com/jamesjohnmcguire/ApiTest
  */
 
 declare(strict_types=1);
