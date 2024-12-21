@@ -10,4 +10,8 @@ CALL composer outdated
 ECHO Checking code styles...
 php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
 
+ECHO Testing...
+CD DevelopmentTools
+CALL UnitTests.cmd
+
 :finish
