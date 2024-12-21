@@ -44,12 +44,22 @@ final class UnitTests extends TestCase
 
 The main method parameters are:
 
-| Type:   | Parameter:              |
-| ------- | ----------------------- |
-| string  | The HTTP method to use. |
-| string  | The API end point.      |
-| ?string | The request data.       |
-
+| Type:          | Parameter:              |
+| -------------- | ----------------------- |
+| string         | The HTTP method to use. |
+| string         | The API end point.      |
+| ?string        | The request data.       |
+| bool or string | The data type.  True,   |
+|                | if it is multipart form |
+|                | data. Implying some of  |
+|                | the data may be binary. |
+|                | If it is false, it will |
+|                | of 'form_params'. If it |
+|                | is a string, the string |
+|                | indicates the type of   |
+|                | data ('body', 'json',   |
+|                | 'form_params', 'query', |
+|                | 'form_params').         |
 
 ## Additional Notes
 This uses Guzzle to process the API request.
