@@ -87,6 +87,16 @@ final class APITests extends AbstractTestBase
 	{
 	}
 
+	#[Group('basic')]
+	#[Group('local')]
+	#[Test]
+	public function SanityCheck()
+	{
+		$tester = 18;
+
+		$this->assertEquals(18, $tester);
+	}
+
 	#[Group('local')]
 	#[Group('post')]
 	#[Test]
