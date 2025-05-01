@@ -18,6 +18,8 @@ namespace DigitalZenWorks\ApiTest;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 
@@ -36,6 +38,13 @@ use function PHPUnit\Framework\assertTrue;
  */
 class APITester
 {
+	/**
+	 * The history container.
+	 *
+	 * @var array
+	 */
+	public $history = [];
+
 	/**
 	 * The complete response object.
 	 *
@@ -156,6 +165,11 @@ class APITester
 			{
 				$options = [];
 			}
+
+			// Track the history of requests.
+			$handlerStack = HandlerStack::create();
+			$handlerStack->push(Middleware::history($this->history));
+			$options['handler'] = $handlerStack;
 
 			if ($this->responseDataType === 'application/json')
 			{
