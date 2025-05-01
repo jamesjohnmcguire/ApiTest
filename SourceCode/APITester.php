@@ -37,6 +37,13 @@ use function PHPUnit\Framework\assertTrue;
 class APITester
 {
 	/**
+	 * The complete response object.
+	 *
+	 * @var \Psr\Http\Message\ResponseInterface
+	 */
+	public \Psr\Http\Message\ResponseInterface $response;
+
+	/**
 	 * Guzzle client object.
 	 *
 	 * @var GuzzleClient
@@ -166,7 +173,9 @@ class APITester
 			}
 
 			$request = new Request($method, $endPoint);
+
 			$response = $this->client->send($request, $options);
+			$this->response = $response;
 
 			self::CheckStatus($response, $isError);
 			$responseContent = self::CheckBody(
