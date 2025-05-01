@@ -188,9 +188,14 @@ class APITester
 		}
 		catch (\Exception $exception)
 		{
-			// Not expecting any general exceptions.
-			$class = get_class($exception);
-			echo "Unexpected Exception class: $class\r\n";
+			if ($isError === false)
+			{
+				// Not expecting any general exceptions.
+				$class = get_class($exception);
+				echo "Unexpected Exception class: $class\r\n";
+			}
+
+			throw $exception;
 		}
 
 		return $responseContent;
