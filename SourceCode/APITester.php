@@ -253,7 +253,7 @@ class APITester
 		if ($expectedJson === true)
 		{
 			assertJson($body);
-			$data = json_decode($body);
+			$data = json_decode($body, true);
 		}
 		else
 		{
