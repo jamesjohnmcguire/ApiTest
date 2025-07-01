@@ -279,7 +279,7 @@ class APITester
 			assertArrayHasKey('error', $data);
 		}
 
-		return $data;
+		return $body;
 	}
 
 	/**
