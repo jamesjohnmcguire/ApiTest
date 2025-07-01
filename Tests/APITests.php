@@ -32,8 +32,6 @@ use PHPUnit\Framework\Attributes\Test;
  */
 final class APITests extends AbstractTestBase
 {
-	private const LOCAL = 'http://pix.localhost:8080/';
-
 	/**
 	 * API Tester object.
 	 *
@@ -47,13 +45,6 @@ final class APITests extends AbstractTestBase
 	 * @var string
 	 */
 	private string $host;
-
-	/**
-	 * Server.
-	 *
-	 * @var string
-	 */
-	private string $server = 'local';
 
 	/**
 	 * Set up before class method.
@@ -73,7 +64,7 @@ final class APITests extends AbstractTestBase
 	{
 		parent::setUp();
 
-		$this->host = self::getHost();
+		$this->host = 'https://httpbin.org';
 
 		$this->apiTester = new APITester($this->host);
 	}
@@ -88,7 +79,6 @@ final class APITests extends AbstractTestBase
 	}
 
 	#[Group('basic')]
-	#[Group('local')]
 	#[Test]
 	public function SanityCheck()
 	{
@@ -97,169 +87,83 @@ final class APITests extends AbstractTestBase
 		$this->assertEquals(18, $tester);
 	}
 
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListAddAccount()
-	{
-		$data =
-		[
-			'userName'       => 'Curly',
-			'passWord'       => 'LetMeIn2!',
-			'mailGunApiKey'  => 'api:key-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			'mailGunSendurl' =>
-				'https://api.mailgun.net/v3/mg.example.com/messages',
-			'smtpHost'       => 'smtp.gmail.com',
-			'smtpUserName'   => 'somebody@gmail.com',
-			'smtpPassWord'   => 'xxxxxxxxxxxxxxxx',
-			'smtpProtocol'   => 'tls',
-			'smtpPort'       => 587
-		];
-
-		$endPoint = self::LOCAL . 'add_account';
-
-		$response =
-			$this->apiTester->testApiEndPoint('POST', $endPoint, $data, 'json');
-
-		// Clean up.
-		$data =
-		[
-			'userName' => 'Curly'
-		];
-
-		$endPoint = self::LOCAL . 'delete_account';
-		$this->apiTester->testApiEndPoint('DELETE', $endPoint, $data, 'json');
-
-		$this->assertIsArray($response);
-		$this->assertContains('Curly account created successfully.', $response);
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSend()
-	{
-		$jsonData = $this->formatRequestJsonBody();
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSendNoOptionalValues()
-	{
-		$jsonData = $this->formatRequestJsonBody();
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSendProduction()
-	{
-		$jsonData = $this->formatRequestJsonBody(true, false, 'production');
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSendProductionWithFrom()
-	{
-		$jsonData = $this->formatRequestJsonBody(false, true);
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSendProductionWithOptionalValues()
-	{
-		$jsonData = $this->formatRequestJsonBody(false, true, 'production');
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSendWithFrom()
-	{
-		$jsonData = $this->formatRequestJsonBody(true, true, 'production');
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointMailListSendWithOptionalValues()
-	{
-		$jsonData = $this->formatRequestJsonBody();
-
-		$endPoint = self::LOCAL . 'maillist_send';
-
-		$this->apiTester->testApiEndPoint('POST', $endPoint, $jsonData, 'body');
-	}
-
-	#[Group('local')]
-	#[Group('post')]
-	#[Test]
-	public function testApiEndPointQueueGetCount()
-	{
-		$endPoint = self::LOCAL . 'queue_count';
-
-		$response = $this->apiTester->testApiEndPoint('POST', $endPoint, null);
-		$this->assertIsInt($response);
-	}
-
 	#[Group('get')]
-	#[Group('local')]
 	#[Test]
-	public function testApiEndPointQueueGetList()
+	public function GetSuccess()
 	{
-		$endPoint = self::LOCAL . 'queue_list';
+		$endPoint = 'https://httpbin.org/get';
 
 		$response = $this->apiTester->testApiEndPoint('GET', $endPoint, null);
-		$this->assertIsArray($response);
+
+		$this->assertNotEmpty($response);
+		$this->assertIsString($response);
+
+		$this->assertStringContainsString('application/json', $response);
+
+		$decodedResponse = json_decode($response, true);
+		$this->assertIsArray($decodedResponse);
+
+		$this->assertArrayHasKey('url', $decodedResponse);
+		$url = $decodedResponse['url'];
+		$this->assertNotEmpty($url);
+		$this->assertIsString($url);
+		$this->assertEquals('https://httpbin.org/get', $url);
 	}
 
-	/**
-	 * Get host method.
-	 *
-	 * @return string
-	 */
-	private static function getHost() : string
+	#[Group('post')]
+	#[Test]
+	public function PostSuccess()
 	{
-		$argv = $GLOBALS['argv'];
+		$endPoint = 'https://httpbin.org/post';
 
-		$host = self::LOCAL;
+		$data =
+		[
+			'name' => 'James',
+			'email' => 'james@example.com'
+		];
 
-		// Specifying host on the command line would be the fifth item.
-		$isEmpty = empty($argv[5]);
+		$response = $this->apiTester->testApiEndPoint(
+			'POST', $endPoint, $data, 'json');
 
-		if ($isEmpty === false)
-		{
-			$host = $argv[5];
-		}
+		$this->assertNotEmpty($response);
+		$this->assertIsString($response);
 
-		return $host;
+		$this->assertStringContainsString('james@example.com', $response);
+
+		$decodedResponse = json_decode($response, true);
+		$this->assertIsArray($decodedResponse);
+
+		$this->assertArrayHasKey('url', $decodedResponse);
+		$url = $decodedResponse['url'];
+		$this->assertNotEmpty($url);
+		$this->assertIsString($url);
+		$this->assertEquals('https://httpbin.org/post', $url);
+	}
+
+	#[Group('post')]
+	#[Test]
+	public function PostSuccessAdditionalData()
+	{
+		$endPoint = 'https://httpbin.org/post';
+
+		$jsonData = $this->formatRequestJsonBody();
+
+		$response = $this->apiTester->testApiEndPoint(
+			'POST', $endPoint, $jsonData, 'body');
+
+		$this->assertNotEmpty($response);
+		$this->assertIsString($response);
+
+		$this->assertStringContainsString('james@example.com', $response);
+
+		$decodedResponse = json_decode($response, true);
+		$this->assertIsArray($decodedResponse);
+
+		$this->assertArrayHasKey('url', $decodedResponse);
+		$url = $decodedResponse['url'];
+		$this->assertNotEmpty($url);
+		$this->assertIsString($url);
+		$this->assertEquals('https://httpbin.org/post', $url);
 	}
 
 	/**
@@ -272,15 +176,9 @@ final class APITests extends AbstractTestBase
 		$postData =
 		[
 			'userName'    => 'JamesMc',
-			'passWord'    => 'LetMeIn2!',
-			'title'       => 'New anime office',
-			'body'        => '<b>This is a bold title</b><br><br>' .
-				'<p>This is the email content</p>',
-			'attachments' => [],
-			'recipients'  => $this->recipients
+			'email' => 'james@example.com',
+			'title'       => 'New anime office'
 		];
-
-		$postData['from'] = $this->fromAddress;
 
 		return $postData;
 	}
