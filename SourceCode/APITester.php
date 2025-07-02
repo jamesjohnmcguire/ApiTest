@@ -191,8 +191,8 @@ class APITester
 			$response = $this->client->send($request, $options);
 			$this->response = $response;
 
-			self::CheckStatus($response, $isError);
-			$responseContent = self::CheckBody(
+			self::checkStatus($response, $isError);
+			$responseContent = self::checkBody(
 				$response,
 				$expectedJson,
 				$isError,
@@ -240,7 +240,7 @@ class APITester
 	 *
 	 * @return mixed
 	 */
-	private static function CheckBody(
+	private static function checkBody(
 		ResponseInterface $response,
 		bool $expectedJson = true,
 		bool $isError = false,
@@ -293,7 +293,7 @@ class APITester
 	 *
 	 * @return void
 	 */
-	private static function CheckStatus(
+	private static function checkStatus(
 		ResponseInterface $response,
 		bool $isError = false)
 	{
