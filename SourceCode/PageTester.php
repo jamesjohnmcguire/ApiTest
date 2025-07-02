@@ -34,14 +34,14 @@ class PageTester extends APITester
 	 * @param boolean               $isError       Indicates whether an error
 	 *                                             is expected or not.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function testPage(
 		string $method,
 		string $endPoint,
 		null | array | string $data,
 		bool $multiPartData = false,
-		bool $isError = false) : mixed
+		bool $isError = false) : string
 	{
 		$responseContent = $this->testApiEndPoint(
 			$method,
