@@ -215,7 +215,7 @@ class APITester
 			{
 				// Not expecting any general exceptions.
 				$class = get_class($exception);
-				echo "Unexpected Exception class: $class\r\n";
+				echo "Unexpected Exception class: $class\n";
 			}
 
 			throw $exception;
@@ -322,7 +322,7 @@ class APITester
 		bool $isError)
 	{
 		$class = get_class($exception);
-		echo "Exception class: $class\r\n";
+		echo "Exception class: $class\n";
 
 		$exists = $exception->hasResponse();
 
@@ -332,7 +332,7 @@ class APITester
 
 			$message = $response->getReasonPhrase();
 			$code = $response->getStatusCode();
-			echo "Exception code: $code\t$message\r\n";
+			echo "Exception code: $code\t$message\n";
 
 			$exists = !empty($response);
 
@@ -344,7 +344,7 @@ class APITester
 			}
 			else
 			{
-				echo "WARNING: Empty exception object\r\n";
+				echo "WARNING: Empty exception object\n";
 			}
 		}
 
