@@ -24,8 +24,8 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
-		},
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
 		"process-timeout": 0
 	},
 	"minimum-stability": "dev",
@@ -41,6 +41,7 @@
 		"php-parallel-lint/php-parallel-lint": "^1.2.0",
 		"phpcompatibility/php-compatibility": "*",
 		"phpcsstandards/phpcsdevtools": "^1.0",
+		"phpcsstandards/phpcsextra": "^1.2.0",
 		"phpstan/phpstan": "^2.0",
 		"roave/security-advisories": "dev-master",
 		"squizlabs/php_codesniffer": "*"
