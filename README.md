@@ -21,6 +21,8 @@ composer require --dev https://packagist.org/packages/digitalzenworks/api-test
 
 ## Usage:
 
+### API Testing
+
 There is one main class with one main method.  You can call it like this:
 
 ```php
@@ -32,10 +34,17 @@ final class UnitTests extends TestCase
 {
 	public function testApiEndPointAccountCount()
 	{
-		$data = [];
-		$apiTester = new APITester('https://example.com');
+
+		$data =
+		[
+			'name' => 'Somebody',
+			'email' => 'Somebody@example.com'
+		];
+
+		$apiTester = new APITester('https://httpbin.org');
+
 		$response =
-			$this->apiTester->testApiEndPoint('PUT', 'accounts_count', $data);
+			$this->apiTester->testApiEndPoint('POST', 'post', $data);
 
 		$this->assertIsArray($response);
 	}
@@ -61,8 +70,61 @@ The main method parameters are:
 |                | 'form_params', 'query', |
 |                | 'form_params').         |
 
+### Page or End-to-End Testing
+
+This also supports testing HTML pages directly.  You can call it like this:
+
+```php
+require_once 'vendor/autoload.php';
+
+use DigitalZenWorks\ApiTest\PageTester;
+
+final class UnitTests extends TestCase
+{
+	#[Test]
+	public function SimplePage()
+	{
+		PageTester $pageTester =
+			new PageTester('https://httpbin.org', 'text/html', 'text/html');
+
+		$endPoint = 'https://httpbin.org/get';
+
+		$content = $this->TestSitePage($endPoint);
+
+		$this->assertNotNull($content);
+		$this->assertNotEmpty($content);
+		$this->assertStringContainsStringIgnoringCase(
+			'<!DOCTYPE html>', $content);
+	}
+}
+```
+
 ## Additional Notes
 This uses Guzzle to process the API request.
+
+### Guzzle Response Object
+
+You can access the Guzzle response object by accessing the public $response property of PageTester. like:
+
+```
+	$response = $pageTester->response;
+	$status = $response->getStatusCode();
+	$this->assertEquals(200, $status);
+```
+
+Note: Status is already checked within TestSitePage. It's just included here for the purposes of example.
+
+### Guzzle History Object
+
+You can also access the Guzzle history (handler) object by accessing the public $response property of PageTester. like:
+
+```
+	$history = $pageTester->history;
+	$redirects = count($history) - 1;
+	$this->assertEquals(1, $redirects);
+```
+
+This can be useful for tracking redirects, among other things.
 
 ## Contributing
 
