@@ -9,6 +9,7 @@ CALL composer outdated
 
 ECHO Checking code styles...
 php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
+CALL vendor\bin\phpstan.phar.bat analyse
 
 ECHO Testing...
 CD DevelopmentTools
