@@ -124,7 +124,7 @@ class APITester
 	 *                                               is required in the response
 	 *                                               body.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function testApiEndPoint(
 		string $method,
@@ -133,7 +133,7 @@ class APITester
 		bool | string $dataType = false,
 		bool $isError = false,
 		bool $errorRequired = true,
-		bool $contentRequired = true) : mixed
+		bool $contentRequired = true) : string
 	{
 		$responseContent = null;
 
@@ -238,14 +238,14 @@ class APITester
 	 * @param boolean           $contentRequired Indicates whether content is
 	 *                                           required in the response body.
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public static function checkBody(
 		ResponseInterface $response,
 		bool $expectedJson = true,
 		bool $isError = false,
 		bool $errorRequired = true,
-		bool $contentRequired = true) : mixed
+		bool $contentRequired = true) : string
 	{
 		$stream = $response->getBody();
 		$body = $stream->getContents();
