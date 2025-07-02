@@ -32,43 +32,39 @@ use DigitalZenWorks\ApiTest\ApiTester;
 
 final class UnitTests extends TestCase
 {
-	public function testApiEndPointAccountCount()
-	{
+    #[Test]
+    public function ApiEndPointPostSuccess()
+    {
+        $data =
+        [
+            'name' => 'Somebody',
+            'email' => 'Somebody@example.com'
+        ];
 
-		$data =
-		[
-			'name' => 'Somebody',
-			'email' => 'Somebody@example.com'
-		];
+        $apiTester = new APITester('https://httpbin.org');
 
-		$apiTester = new APITester('https://httpbin.org');
+        $response =
+            $this->apiTester->testApiEndPoint('POST', 'post', $data);
 
-		$response =
-			$this->apiTester->testApiEndPoint('POST', 'post', $data);
-
-		$this->assertIsArray($response);
-	}
+        $this->assertIsArray($response);
+    }
 )
 ```
 
 The main method parameters are:
 
-| Type:          | Parameter:              |
-| -------------- | ----------------------- |
-| string         | The HTTP method to use. |
-| string         | The API end point.      |
-| ?string        | The request data.       |
-| bool or string | The data type.  True,   |
-|                | if it is multipart form |
-|                | data. Implying some of  |
-|                | the data may be binary. |
-|                | If it is false, it will |
-|                | of 'form_params'. If it |
-|                | is a string, the string |
-|                | indicates the type of   |
-|                | data ('body', 'json',   |
-|                | 'form_params', 'query', |
-|                | 'form_params').         |
+| Type:          | Parameter:                                 |
+| -------------- | ------------------------------------------ |
+| string         | The HTTP method to use.                    |
+| string         | The API end point.                         |
+| ?string        | The request data.                          |
+| bool or string | The data type.  True, if it is multipart   |
+|                | form data. Implying some of the data may   |
+|                | be binary. If it is false, it will then be |
+|                | of the 'form_params' type. If it is a      |
+|                | string, the string indicates the type of   |
+|                | data ('body', 'json', 'form_params',       |
+|                | 'query', 'form_params').                   |
 
 ### Page or End-to-End Testing
 
@@ -81,21 +77,21 @@ use DigitalZenWorks\ApiTest\PageTester;
 
 final class UnitTests extends TestCase
 {
-	#[Test]
-	public function SimplePage()
-	{
-		PageTester $pageTester =
-			new PageTester('https://httpbin.org', 'text/html', 'text/html');
+    #[Test]
+    public function SimplePage()
+    {
+        PageTester $pageTester =
+            new PageTester('https://httpbin.org', 'text/html', 'text/html');
 
-		$endPoint = 'https://httpbin.org/get';
+        $endPoint = 'https://httpbin.org/get';
 
-		$content = $this->TestSitePage($endPoint);
+        $content = $this->TestSitePage($endPoint);
 
-		$this->assertNotNull($content);
-		$this->assertNotEmpty($content);
-		$this->assertStringContainsStringIgnoringCase(
-			'<!DOCTYPE html>', $content);
-	}
+        $this->assertNotNull($content);
+        $this->assertNotEmpty($content);
+        $this->assertStringContainsStringIgnoringCase(
+            '<!DOCTYPE html>', $content);
+    }
 }
 ```
 
@@ -107,9 +103,9 @@ This uses Guzzle to process the API request.
 You can access the Guzzle response object by accessing the public $response property of PageTester. like:
 
 ```
-	$response = $pageTester->response;
-	$status = $response->getStatusCode();
-	$this->assertEquals(200, $status);
+    $response = $pageTester->response;
+    $status = $response->getStatusCode();
+    $this->assertEquals(200, $status);
 ```
 
 Note: Status is already checked within TestSitePage. It's just included here for the purposes of example.
@@ -119,9 +115,9 @@ Note: Status is already checked within TestSitePage. It's just included here for
 You can also access the Guzzle history (handler) object by accessing the public $response property of PageTester. like:
 
 ```
-	$history = $pageTester->history;
-	$redirects = count($history) - 1;
-	$this->assertEquals(1, $redirects);
+    $history = $pageTester->history;
+    $redirects = count($history) - 1;
+    $this->assertEquals(1, $redirects);
 ```
 
 This can be useful for tracking redirects, among other things.
