@@ -44,7 +44,7 @@ final class UnitTests extends TestCase
         $apiTester = new APITester('https://httpbin.org');
 
         $response =
-            $this->apiTester->testApiEndPoint('POST', 'post', $data);
+            $this->apiTester->apiEndPointTest('POST', 'post', $data);
 
         $this->assertIsArray($response);
     }

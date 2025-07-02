@@ -107,6 +107,114 @@ class APITester
 	 * @param string                $method          The HTTP method to use.
 	 * @param string                $endPoint        The API end point.
 	 * @param null | array | string $data            The JSON data to process.
+	 * @param ApiOptions            $options         The options object.
+	 *                                               Contains various options.
+	 *
+	 * @return string
+	 */
+	public function apiEndPointTest(
+		string $method,
+		string $endPoint,
+		null | array | string $data = null,
+		ApiOptions $apiOptions = new ApiOptions()) : string
+	{
+		$responseContent = null;
+
+		try
+		{
+			if ($data !== null)
+			{
+				if ($apiOptions->dataType === true)
+				{
+					// Multipart - Usually forms with file uploads.
+					$options = ['multipart' => $data];
+				}
+				else
+				{
+					$isString = is_string($apiOptions->dataType);
+
+					if ($isString === true)
+					{
+						$options = [$apiOptions->dataType => $data];
+					}
+					else
+					{
+						// Normal form data.
+						$options = ['form_params' => $data];
+					}
+				}
+			}
+			else
+			{
+				$options = [];
+			}
+
+			// Track the history of requests.
+			$handlerStack = HandlerStack::create();
+			$handlerStack->push(Middleware::history($this->history));
+			$options['handler'] = $handlerStack;
+
+			if ($this->responseDataType === 'application/json')
+			{
+				$expectedJson = true;
+			}
+			else
+			{
+				$expectedJson = false;
+			}
+
+			if ($apiOptions->isError === true)
+			{
+				// Disable throwing exceptions on an HTTP protocol errors.
+				$options['http_errors'] = false;
+			}
+
+			$request = new Request($method, $endPoint);
+
+			$response = $this->client->send($request, $options);
+			$this->response = $response;
+
+			self::checkStatus($response, $apiOptions->isError);
+			$responseContent = self::checkBody(
+				$response,
+				$expectedJson,
+				$apiOptions->isError,
+				$apiOptions->errorRequired,
+				$apiOptions->contentRequired);
+		}
+		// Guzzle high level super class exception.
+		catch (BadResponseException $exception)
+		{
+			$this->displayException($exception, $apiOptions->isError);
+		}
+		// Guzzle low level super class exception.
+		catch (RequestException $exception)
+		{
+			$this->displayException($exception, $apiOptions->isError);
+		}
+		catch (\Exception $exception)
+		{
+			if ($apiOptions->isError === false)
+			{
+				// Not expecting any general exceptions.
+				$class = get_class($exception);
+				echo "Unexpected Exception class: $class\n";
+			}
+
+			throw $exception;
+		}
+
+		return $responseContent;
+	}
+
+	/**
+	 * Test API end point method.
+	 *
+	 * @deprecated since v1.5.18, use apiEndPointTest() instead.
+	 *
+	 * @param string                $method          The HTTP method to use.
+	 * @param string                $endPoint        The API end point.
+	 * @param null | array | string $data            The JSON data to process.
 	 * @param boolean | string      $dataType        The data type.  True, if it
 	 *                                               is multipart form data.
 	 *                                               Implying some of the data
@@ -135,93 +243,14 @@ class APITester
 		bool $errorRequired = true,
 		bool $contentRequired = true) : string
 	{
-		$responseContent = null;
+		$options = new ApiOptions();
 
-		try
-		{
-			if ($data !== null)
-			{
-				if ($dataType === true)
-				{
-					// Multipart - Usually forms with file uploads.
-					$options = ['multipart' => $data];
-				}
-				else
-				{
-					$isString = is_string($dataType);
+		$options->dataType = $dataType;
+		$options->isError = $isError;
+		$options->errorRequired = $errorRequired;
+		$options->contentRequired = $contentRequired;
 
-					if ($isString === true)
-					{
-						$options = [$dataType => $data];
-					}
-					else
-					{
-						// Normal form data.
-						$options = ['form_params' => $data];
-					}
-				}
-			}
-			else
-			{
-				$options = [];
-			}
-
-			// Track the history of requests.
-			$handlerStack = HandlerStack::create();
-			$handlerStack->push(Middleware::history($this->history));
-			$options['handler'] = $handlerStack;
-
-			if ($this->responseDataType === 'application/json')
-			{
-				$expectedJson = true;
-			}
-			else
-			{
-				$expectedJson = false;
-			}
-
-			if ($isError === true)
-			{
-				// Disable throwing exceptions on an HTTP protocol errors.
-				$options['http_errors'] = false;
-			}
-
-			$request = new Request($method, $endPoint);
-
-			$response = $this->client->send($request, $options);
-			$this->response = $response;
-
-			self::checkStatus($response, $isError);
-			$responseContent = self::checkBody(
-				$response,
-				$expectedJson,
-				$isError,
-				$errorRequired,
-				$contentRequired);
-		}
-		// Guzzle high level super class exception.
-		catch (BadResponseException $exception)
-		{
-			$this->displayException($exception, $isError);
-		}
-		// Guzzle low level super class exception.
-		catch (RequestException $exception)
-		{
-			$this->displayException($exception, $isError);
-		}
-		catch (\Exception $exception)
-		{
-			if ($isError === false)
-			{
-				// Not expecting any general exceptions.
-				$class = get_class($exception);
-				echo "Unexpected Exception class: $class\n";
-			}
-
-			throw $exception;
-		}
-
-		return $responseContent;
+		return $this->apiEndPointTest($method, $endPoint, $data, $options);
 	}
 
 	/**

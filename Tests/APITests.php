@@ -20,6 +20,7 @@ $root = dirname(__DIR__, 1);
 require_once $root . '/vendor/autoload.php';
 require_once 'AbstractTestBase.php';
 
+use DigitalZenWorks\ApiTest\ApiOptions;
 use DigitalZenWorks\ApiTest\APITester;
 
 use PHPUnit\Framework\Attributes\Group;
@@ -93,7 +94,7 @@ final class APITests extends AbstractTestBase
 	{
 		$endPoint = 'https://httpbin.org/get';
 
-		$response = $this->apiTester->testApiEndPoint('GET', $endPoint, null);
+		$response = $this->apiTester->apiEndPointTest('GET', $endPoint);
 
 		$this->assertNotEmpty($response);
 		$this->assertIsString($response);
@@ -122,8 +123,15 @@ final class APITests extends AbstractTestBase
 			'email' => 'james@example.com'
 		];
 
-		$response = $this->apiTester->testApiEndPoint(
-			'POST', $endPoint, $data, 'json');
+		$options = new ApiOptions();
+
+		$options->dataType = 'json';
+		$options->isError = false;
+		$options->errorRequired = true;
+		$options->contentRequired = true;
+
+		$response = $this->apiTester->apiEndPointTest(
+			'POST', $endPoint, $data, $options);
 
 		$this->assertNotEmpty($response);
 		$this->assertIsString($response);
@@ -148,8 +156,15 @@ final class APITests extends AbstractTestBase
 
 		$jsonData = $this->formatRequestJsonBody();
 
-		$response = $this->apiTester->testApiEndPoint(
-			'POST', $endPoint, $jsonData, 'body');
+		$options = new ApiOptions();
+
+		$options->dataType = 'body';
+		$options->isError = false;
+		$options->errorRequired = true;
+		$options->contentRequired = true;
+
+		$response = $this->apiTester->apiEndPointTest(
+			'POST', $endPoint, $jsonData, $options);
 
 		$this->assertNotEmpty($response);
 		$this->assertIsString($response);

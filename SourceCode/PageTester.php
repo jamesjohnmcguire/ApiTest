@@ -43,14 +43,19 @@ class PageTester extends APITester
 		bool $multiPartData = false,
 		bool $isError = false) : string
 	{
-		$responseContent = $this->testApiEndPoint(
+		$options = new ApiOptions();
+
+		$options->dataType = $multiPartData;
+		$options->isError = $isError;
+		$options->errorRequired = true;
+		$options->contentRequired = true;
+
+		$responseContent = $this->apiEndPointTest(
 			$method,
 			$endPoint,
 			$data,
-			$multiPartData,
-			$isError,
-			false);
+			$options);
 
-		return $responseContent;
+			return $responseContent;
 	}
 }
