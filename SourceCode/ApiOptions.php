@@ -1,7 +1,9 @@
 <?php
 
 /**
- * An end to end API tester.
+ * API Options class.
+ *
+ * Represents options for API endpoint testing.
  *
  * @package   APITest
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
@@ -15,40 +17,48 @@ declare(strict_types=1);
 
 namespace DigitalZenWorks\ApiTest;
 
+/**
+ * Class ApiOptions
+ *
+ * Contains configuration options for API endpoint testing.
+ */
 class ApiOptions
 {
 	/**
-	 * The content required flag.
+	 * Indicates whether content is required in the response body.
 	 *
-	 * @var boolean Indicates whether content is required in the response body.
+	 * @var boolean
 	 */
 	public bool $contentRequired = true;
 
 	/**
-	 * The data type.
+	 * The data type for the request.
+	 * True if multipart form data (implying some data may be binary).
+	 * If a string, indicates the type of data ('body', 'json', 'form_params').
 	 *
-	 * @var boolean|string The data type.  True, if it is multipart form data.
-	 *                     Implying some of the data may be binary. If it is a
-	 *                     string, the string indicates the type of data
-	 *                     ('body', 'json', 'form_params').
+	 * @var boolean|string
 	 */
 	public bool|string $dataType = false;
 
 	/**
-	 * The error required flag.
+	 * Indicates whether an error field is expected in the response.
 	 *
-	 * @var boolean Indicates whether an error field is expected in the
-	 *              response or not.
+	 * @var boolean
 	 */
-	 public bool $errorRequired = true;
+	public bool $errorRequired = true;
 
-	 /**
-	 * The is error flag.
+	/**
+	 * Indicates whether an error is expected or not.
 	 *
-	 * @var boolean Indicates whether an error is expected or not.
+	 * @var boolean
 	 */
 	public bool $isError = false;
 
+	/**
+	 * ApiOptions constructor.
+	 *
+	 * Initializes the API options with default values.
+	 */
 	public function __construct()
 	{
 		$this->dataType = false;

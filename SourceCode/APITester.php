@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace DigitalZenWorks\ApiTest;
 
-use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
@@ -23,6 +23,7 @@ use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 
+// phpcs:disable Universal.UseStatements.DisallowUseFunction.FoundWithoutAlias
 use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertArrayNotHasKey;
 use function PHPUnit\Framework\assertEquals;
@@ -31,17 +32,21 @@ use function PHPUnit\Framework\assertNotEmpty;
 use function PHPUnit\Framework\assertNotEquals;
 use function PHPUnit\Framework\assertTrue;
 
+// phpcs:enable Universal.UseStatements.DisallowUseFunction.FoundWithoutAlias
+
+// phpcs:disable Squiz.Commenting.ClassComment.TagNotAllowed
 /**
  * API Tester class.
  *
  * Contains all the automated API tests.
  *
- * @internal
- * @todo Consider renaming to ApiTester or something more aligned with
+ * @internal Consider renaming to ApiTester or something more aligned with
  * naming scheme in v2.
  */
 class APITester
 {
+	// phpcs:enable Squiz.Commenting.ClassComment.TagNotAllowed
+
 	/**
 	 * The history container.
 	 *
@@ -59,9 +64,9 @@ class APITester
 	/**
 	 * Guzzle client object.
 	 *
-	 * @var GuzzleClient
+	 * @var Client
 	 */
-	private GuzzleClient $client;
+	private Client $client;
 
 	/**
 	 * Response data type.
@@ -102,7 +107,7 @@ class APITester
 			]
 		];
 
-		$this->client = new GuzzleClient($options);
+		$this->client = new Client($options);
 	}
 
 	/**
@@ -113,6 +118,8 @@ class APITester
 	 * @param null|array<string>|string $data       The JSON data to process.
 	 * @param ApiOptions                $apiOptions The options object.
 	 *                                              Contains various options.
+	 *
+	 * @throws \Exception If an unexpected exception occurs during the request.
 	 *
 	 * @return string
 	 */
@@ -214,8 +221,6 @@ class APITester
 	/**
 	 * Test API end point method.
 	 *
-	 * @deprecated since v1.5.18, use apiEndPointTest() instead.
-	 *
 	 * @param string                    $method          The HTTP method to use.
 	 * @param string                    $endPoint        The API end point.
 	 * @param null|array<string>|string $data            The JSON data to
@@ -239,6 +244,8 @@ class APITester
 	 *                                                   the response body.
 	 *
 	 * @return string
+	 *
+	 * @deprecated since v1.5.18, use apiEndPointTest() instead.
 	 */
 	public function testApiEndPoint(
 		string $method,
