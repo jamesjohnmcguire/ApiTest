@@ -240,7 +240,7 @@ class APITester
 	 *
 	 * @return mixed
 	 */
-	private static function checkBody(
+	public static function checkBody(
 		ResponseInterface $response,
 		bool $expectedJson = true,
 		bool $isError = false,
@@ -293,7 +293,7 @@ class APITester
 	 *
 	 * @return void
 	 */
-	private static function checkStatus(
+	public static function checkStatus(
 		ResponseInterface $response,
 		bool $isError = false)
 	{
