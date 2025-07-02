@@ -1,6 +1,2 @@
-Add Notes about Page (End to End) Testing
-Add Notes about Response and History objects
-ApiTester tests should not implicitly depend on DotPix projects
-ApiTester.php 312	Add Message
 Rename repo	ApiTest	to PhpApiTest?
-Add Automated Tests with http://httpbin.org/ ?
+APITester vs ApiTester  class_alias(APITester::class, 'YourNamespace\ApiTester');

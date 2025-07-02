@@ -35,6 +35,10 @@ use function PHPUnit\Framework\assertTrue;
  * API Tester class.
  *
  * Contains all the automated API tests.
+ *
+ * @internal
+ * @todo Consider renaming to ApiTester or something more aligned with
+ * naming scheme in v2.
  */
 class APITester
 {
