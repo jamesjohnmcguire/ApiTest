@@ -20,33 +20,42 @@ class ApiOptions
 	/**
 	 * The content required flag.
 	 *
-	 * @var boolean
+	 * @var boolean Indicates whether content is required in the response body.
 	 */
 	public bool $contentRequired = true;
 
 	/**
 	 * The data type.
 	 *
-	 * @var boolean|string
+	 * @var boolean|string The data type.  True, if it is multipart form data.
+	 *                     Implying some of the data may be binary. If it is a
+	 *                     string, the string indicates the type of data
+	 *                     ('body', 'json', 'form_params').
 	 */
 	public bool|string $dataType = false;
 
 	/**
 	 * The error required flag.
 	 *
-	 * @var boolean
+	 * @var boolean Indicates whether an error field is expected in the
+	 *              response or not.
 	 */
 	 public bool $errorRequired = true;
 
 	 /**
 	 * The is error flag.
 	 *
-	 * @var boolean
+	 * @var boolean Indicates whether an error is expected or not.
 	 */
 	public bool $isError = false;
 
 	public function __construct(array $overrides = [])
 	{
+		$this->dataType = false;
+		$this->isError = false;
+		$this->errorRequired = true;
+		$this->contentRequired = true;
+
 		foreach ($overrides as $key => $value)
 		{
 			$exists = property_exists($this, $key);
