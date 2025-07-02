@@ -45,7 +45,7 @@ class APITester
 	/**
 	 * The history container.
 	 *
-	 * @var array
+	 * @var array<object>
 	 */
 	public $history = [];
 
@@ -97,8 +97,8 @@ class APITester
 			'base_uri' => $host,
 			'headers'  =>
 			[
-				'Content-Type' => $requestDataType,
-				'Accept'       => $responseDataType
+				'Content-Type' => $this->requestDataType,
+				'Accept'       => $this->responseDataType
 			]
 		];
 
@@ -108,11 +108,11 @@ class APITester
 	/**
 	 * Test API end point method.
 	 *
-	 * @param string                $method          The HTTP method to use.
-	 * @param string                $endPoint        The API end point.
-	 * @param null | array | string $data            The JSON data to process.
-	 * @param ApiOptions            $options         The options object.
-	 *                                               Contains various options.
+	 * @param string                    $method     The HTTP method to use.
+	 * @param string                    $endPoint   The API end point.
+	 * @param null|array<string>|string $data       The JSON data to process.
+	 * @param ApiOptions                $apiOptions The options object.
+	 *                                              Contains various options.
 	 *
 	 * @return string
 	 */
@@ -216,25 +216,27 @@ class APITester
 	 *
 	 * @deprecated since v1.5.18, use apiEndPointTest() instead.
 	 *
-	 * @param string                $method          The HTTP method to use.
-	 * @param string                $endPoint        The API end point.
-	 * @param null | array | string $data            The JSON data to process.
-	 * @param boolean | string      $dataType        The data type.  True, if it
-	 *                                               is multipart form data.
-	 *                                               Implying some of the data
-	 *                                               may be binary. If it is a
-	 *                                               string, the string
-	 *                                               indicates the type of data
-	 *                                               ('body', 'json',
-	 *                                               'form_params').
-	 * @param boolean               $isError         Indicates whether an error
-	 *                                               is expected or not.
-	 * @param boolean               $errorRequired   Indicates whether an error
-	 *                                               field is expected in the
-	 *                                               response or not.
-	 * @param boolean               $contentRequired Indicates whether content
-	 *                                               is required in the response
-	 *                                               body.
+	 * @param string                    $method          The HTTP method to use.
+	 * @param string                    $endPoint        The API end point.
+	 * @param null|array<string>|string $data            The JSON data to
+	 *                                                   process.
+	 * @param boolean | string          $dataType        The data type.  True,
+	 *                                                   if it is multipart form
+	 *                                                   data. Implying some of
+	 *                                                   the data may be binary.
+	 *                                                   If it is a string, the
+	 *                                                   string indicates the
+	 *                                                   type of data ('body',
+	 *                                                   'json', 'form_params').
+	 * @param boolean                   $isError         Indicates whether an
+	 *                                                   error is expected or
+	 *                                                   not.
+	 * @param boolean                   $errorRequired   Indicates whether an
+	 *                                                   error field is expected
+	 *                                                   in the response or not.
+	 * @param boolean                   $contentRequired Indicates whether
+	 *                                                   content is required in
+	 *                                                   the response body.
 	 *
 	 * @return string
 	 */

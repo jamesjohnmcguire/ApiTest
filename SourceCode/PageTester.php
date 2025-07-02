@@ -25,14 +25,14 @@ class PageTester extends APITester
 	/**
 	 * Test API end point method.
 	 *
-	 * @param string                $method        The HTTP method to use.
-	 * @param string                $endPoint      The API end point.
-	 * @param null | array | string $data          The JSON data to process.
-	 * @param boolean               $multiPartData Data is multipart form data.
-	 *                                             Implying some of the data
-	 *                                             may be binary.
-	 * @param boolean               $isError       Indicates whether an error
-	 *                                             is expected or not.
+	 * @param string                    $method        The HTTP method to use.
+	 * @param string                    $endPoint      The API end point.
+	 * @param null|array<string>|string $data          The JSON data to process.
+	 * @param boolean                   $multiPartData Data is multipart form
+	 *                                                 data. Implying some of
+	 *                                                 the data may be binary.
+	 * @param boolean                   $isError       Indicates whether an
+	 *                                                 error is expected or not.
 	 *
 	 * @return string
 	 */

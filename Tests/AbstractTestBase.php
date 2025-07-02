@@ -34,20 +34,13 @@ abstract class AbstractTestBase extends TestCase
 	/**
 	 * Recipients.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	protected array $recipients =
 	[
 		'donotreply@gmail.com',
 		'jahmic@gmail.com'
 	];
-
-	/**
-	 * Server.
-	 *
-	 * @var string
-	 */
-	private string $server = 'local';
 
 	/**
 	 * Set up method.

@@ -49,21 +49,11 @@ class ApiOptions
 	 */
 	public bool $isError = false;
 
-	public function __construct(array $overrides = [])
+	public function __construct()
 	{
 		$this->dataType = false;
 		$this->isError = false;
 		$this->errorRequired = true;
 		$this->contentRequired = true;
-
-		foreach ($overrides as $key => $value)
-		{
-			$exists = property_exists($this, $key);
-
-			if (true === $exists)
-			{
-				$this->$key = $value;
-			}
-		}
 	}
 }

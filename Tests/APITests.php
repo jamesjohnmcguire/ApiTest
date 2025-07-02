@@ -79,6 +79,11 @@ final class APITests extends AbstractTestBase
 	{
 	}
 
+	/**
+	 * Sanity check test.
+	 * 
+	 * @return void
+	 */
 	#[Group('basic')]
 	#[Test]
 	public function SanityCheck()
@@ -88,6 +93,11 @@ final class APITests extends AbstractTestBase
 		$this->assertEquals(18, $tester);
 	}
 
+	/**
+	 * Get success test.
+	 * 
+	 * @return void
+	 */
 	#[Group('get')]
 	#[Test]
 	public function GetSuccess()
@@ -97,7 +107,6 @@ final class APITests extends AbstractTestBase
 		$response = $this->apiTester->apiEndPointTest('GET', $endPoint);
 
 		$this->assertNotEmpty($response);
-		$this->assertIsString($response);
 
 		$this->assertStringContainsString('application/json', $response);
 
@@ -111,6 +120,11 @@ final class APITests extends AbstractTestBase
 		$this->assertEquals('https://httpbin.org/get', $url);
 	}
 
+	/**
+	 * Post success test.
+	 * 
+	 * @return void
+	 */
 	#[Group('post')]
 	#[Test]
 	public function PostSuccess()
@@ -134,7 +148,6 @@ final class APITests extends AbstractTestBase
 			'POST', $endPoint, $data, $options);
 
 		$this->assertNotEmpty($response);
-		$this->assertIsString($response);
 
 		$this->assertStringContainsString('james@example.com', $response);
 
@@ -148,6 +161,11 @@ final class APITests extends AbstractTestBase
 		$this->assertEquals('https://httpbin.org/post', $url);
 	}
 
+	/**
+	 * Post success additional data test.
+	 * 
+	 * @return void
+	 */
 	#[Group('post')]
 	#[Test]
 	public function PostSuccessAdditionalData()
@@ -167,7 +185,6 @@ final class APITests extends AbstractTestBase
 			'POST', $endPoint, $jsonData, $options);
 
 		$this->assertNotEmpty($response);
-		$this->assertIsString($response);
 
 		$this->assertStringContainsString('james@example.com', $response);
 
@@ -184,7 +201,7 @@ final class APITests extends AbstractTestBase
 	/**
 	 * Format request body method.
 	 *
-	 * @return string
+	 * @return array<string>
 	 */
 	private function formatRequestBody() : array
 	{
