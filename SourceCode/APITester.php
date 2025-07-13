@@ -217,6 +217,7 @@ class APITester
 		return $responseContent;
 	}
 
+	//phpcs:disable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
 	/**
 	 * Test API end point method.
 	 *
@@ -263,6 +264,7 @@ class APITester
 
 		return $this->apiEndPointTest($method, $endPoint, $data, $options);
 	}
+	//phpcs:enable Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
 
 	/**
 	 * Check body method.
