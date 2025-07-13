@@ -174,7 +174,7 @@ class APITester
 				$expectedJson = false;
 			}
 
-			if ($apiOptions->isError === true)
+			if ($apiOptions->errorExpected === true)
 			{
 				// Disable throwing exceptions on an HTTP protocol errors.
 				$options['http_errors'] = false;
@@ -185,27 +185,26 @@ class APITester
 			$response = $this->client->send($request, $options);
 			$this->response = $response;
 
-			self::checkStatus($response, $apiOptions->isError);
+			self::checkStatus($response, $apiOptions->errorExpected);
 			$responseContent = self::checkBody(
 				$response,
 				$expectedJson,
-				$apiOptions->isError,
-				$apiOptions->errorRequired,
+				$apiOptions->errorExpected,
 				$apiOptions->contentRequired);
 		}
 		// Guzzle high level super class exception.
 		catch (BadResponseException $exception)
 		{
-			$this->displayException($exception, $apiOptions->isError);
+			$this->displayException($exception, $apiOptions->errorExpected);
 		}
 		// Guzzle low level super class exception.
 		catch (RequestException $exception)
 		{
-			$this->displayException($exception, $apiOptions->isError);
+			$this->displayException($exception, $apiOptions->errorExpected);
 		}
 		catch (\Exception $exception)
 		{
-			if ($apiOptions->isError === false)
+			if ($apiOptions->errorExpected === false)
 			{
 				// Not expecting any general exceptions.
 				$class = get_class($exception);
@@ -253,14 +252,13 @@ class APITester
 		null | array | string $data,
 		bool | string $dataType = false,
 		bool $isError = false,
-		bool $errorRequired = true,
+		bool $errorRequired = false,
 		bool $contentRequired = true) : string
 	{
 		$options = new ApiOptions();
 
 		$options->dataType = $dataType;
-		$options->isError = $isError;
-		$options->errorRequired = $errorRequired;
+		$options->errorExpected = $isError;
 		$options->contentRequired = $contentRequired;
 
 		return $this->apiEndPointTest($method, $endPoint, $data, $options);
@@ -272,9 +270,7 @@ class APITester
 	 * @param ResponseInterface $response        The PSR7 response object.
 	 * @param boolean           $expectedJson    Indicates whether the body is
 	 *                                           expected to be json or not.
-	 * @param boolean           $isError         Indicates whether an error is
-	 *                                           expected or not.
-	 * @param boolean           $errorRequired   Indicates whether an error
+	 * @param boolean           $errorExpected   Indicates whether an error
 	 *                                           field is expected in the
 	 *                                           response or not.
 	 * @param boolean           $contentRequired Indicates whether content is
@@ -285,8 +281,7 @@ class APITester
 	public static function checkBody(
 		ResponseInterface $response,
 		bool $expectedJson = true,
-		bool $isError = false,
-		bool $errorRequired = true,
+		bool $errorExpected = false,
 		bool $contentRequired = true) : string
 	{
 		$stream = $response->getBody();
@@ -307,18 +302,18 @@ class APITester
 			assertNotEmpty($data);
 		}
 
-		if ($isError === false)
-		{
-			$isArray = is_array($data);
+		$isArray = is_array($data);
 
-			if ($isArray === true)
+		if ($isArray === true)
+		{
+			if ($errorExpected === false)
 			{
 				assertArrayNotHasKey('error', $data);
 			}
-		}
-		elseif ($errorRequired === true)
-		{
-			assertArrayHasKey('error', $data);
+			else
+			{
+				assertArrayHasKey('error', $data);
+			}
 		}
 
 		return $body;
@@ -327,21 +322,24 @@ class APITester
 	/**
 	 * Check status method.
 	 *
-	 * @param \Psr\Http\Message\ResponseInterface $response The PSR7 response
-	 *                                                      object.
-	 * @param boolean                             $isError  Indicates whether an
-	 *                                                      error is expected or
-	 *                                                      not.
+	 * @param \Psr\Http\Message\ResponseInterface $response      The PSR7
+	 *                                                           response
+	 *                                                           object.
+	 * @param boolean                             $errorExpected Indicates
+	 *                                                           whether an
+	 *                                                           error is
+	 *                                                           expected or
+	 *                                                           not.
 	 *
 	 * @return void
 	 */
 	public static function checkStatus(
 		ResponseInterface $response,
-		bool $isError = false)
+		bool $errorExpected = false)
 	{
 		$status = $response->getStatusCode();
 
-		if ($isError === true)
+		if ($errorExpected === true)
 		{
 			assertNotEquals(200, $status);
 		}
@@ -354,14 +352,15 @@ class APITester
 	/**
 	 * Display exception method.
 	 *
-	 * @param object  $exception The exception to process.
-	 * @param boolean $isError   Indicates whether an error is expected or not.
+	 * @param object  $exception     The exception to process.
+	 * @param boolean $errorExpected Indicates whether an error is expected
+	 *                               or not.
 	 *
 	 * @return void
 	 */
 	private static function displayException(
 		object $exception,
-		bool $isError)
+		bool $errorExpected)
 	{
 		$class = get_class($exception);
 		echo "Exception class: $class\n";
@@ -390,6 +389,6 @@ class APITester
 			}
 		}
 
-		assertTrue($isError);
+		assertTrue($errorExpected);
 	}
 }

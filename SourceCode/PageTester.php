@@ -46,8 +46,7 @@ class PageTester extends APITester
 		$options = new ApiOptions();
 
 		$options->dataType = $multiPartData;
-		$options->isError = $isError;
-		$options->errorRequired = true;
+		$options->errorExpected = $isError;
 		$options->contentRequired = true;
 
 		$responseContent = $this->apiEndPointTest(

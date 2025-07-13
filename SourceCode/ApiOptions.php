@@ -41,18 +41,12 @@ class ApiOptions
 	public bool|string $dataType = false;
 
 	/**
-	 * Indicates whether an error field is expected in the response.
+	 * Indicates whether an error is expected.  This may be by a thown
+	 * exception or by a 'error' field in the response.
 	 *
 	 * @var boolean
 	 */
-	public bool $errorRequired = true;
-
-	/**
-	 * Indicates whether an error is expected or not.
-	 *
-	 * @var boolean
-	 */
-	public bool $isError = false;
+	public bool $errorExpected = false;
 
 	/**
 	 * ApiOptions constructor.
@@ -62,8 +56,7 @@ class ApiOptions
 	public function __construct()
 	{
 		$this->dataType = false;
-		$this->isError = false;
-		$this->errorRequired = true;
+		$this->errorExpected = false;
 		$this->contentRequired = true;
 	}
 }
