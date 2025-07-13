@@ -372,14 +372,14 @@ class APITester
 		{
 			$response = $exception->getResponse();
 
-			$message = $response->getReasonPhrase();
-			$code = $response->getStatusCode();
-			echo "Exception code: $code\t$message\n";
-
 			$exists = !empty($response);
 
 			if ($exists === true)
 			{
+				$message = $response->getReasonPhrase();
+				$code = $response->getStatusCode();
+				echo "Exception code: $code\t$message\n";
+
 				$body = $response->getBody();
 				$contents = $body->getContents();
 				print_r($contents);
