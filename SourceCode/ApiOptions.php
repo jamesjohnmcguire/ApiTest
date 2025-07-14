@@ -32,15 +32,6 @@ class ApiOptions
 	public bool $contentRequired = true;
 
 	/**
-	 * The data type for the request.
-	 * Can be one of the following values: 'body', 'form_params', 'json',
-	 * 'multipart'.
-	 *
-	 * @var null|string
-	 */
-	public ?string $requestDataType = null;
-
-	/**
 	 * Indicates whether an error is expected.  This may be by a thown
 	 * exception or by a 'error' field in the response.
 	 *
@@ -54,6 +45,15 @@ class ApiOptions
 	 * @var null|array<string, bool|integer|object>
 	 */
 	public ?array $guzzleAdditionalOptions = null;
+
+	/**
+	 * The data type for the request.
+	 * Can be one of the following values: 'body', 'form_params', 'json',
+	 * 'multipart'.
+	 *
+	 * @var null|string
+	 */
+	public ?string $requestDataType = null;
 
 	/**
 	 * Indicates whether included basic asserts should be tried.
