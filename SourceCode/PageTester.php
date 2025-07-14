@@ -35,6 +35,8 @@ class PageTester extends APITester
 	 *                                                 error is expected or not.
 	 *
 	 * @return string
+	 *
+	 * @deprecated since v1.5.18, use webPageTest() instead.
 	 */
 	public function testPage(
 		string $method,
@@ -51,14 +53,42 @@ class PageTester extends APITester
 		}
 
 		$options->errorExpected = $isError;
-		$options->contentRequired = true;
 
-		$responseContent = $this->apiEndPointTest(
+		$responseContent = $this->webPageTest(
 			$method,
 			$endPoint,
 			$data,
 			$options);
 
-			return $responseContent;
+		return $responseContent;
+	}
+
+
+	/**
+	 * Test web page method.
+	 *
+	 * @param string                    $method     The HTTP method to use.
+	 * @param string                    $endPoint   The API end point.
+	 * @param null|array<string>|string $data       The JSON data to process.
+	 * @param ApiOptions                $apiOptions The options object.
+	 *                                              Contains various options.
+	 *
+	 * @throws \Exception If an unexpected exception occurs during the request.
+	 *
+	 * @return string
+	 */
+	public function webPageTest(
+		string $method,
+		string $endPoint,
+		null | array | string $data = null,
+		ApiOptions $apiOptions = new ApiOptions()) : ?string
+	{
+		$responseContent = $this->apiEndPointTest(
+			$method,
+			$endPoint,
+			$data,
+			$apiOptions);
+
+		return $responseContent;
 	}
 }

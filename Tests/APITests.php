@@ -22,6 +22,7 @@ require_once 'AbstractTestBase.php';
 
 use DigitalZenWorks\ApiTest\ApiOptions;
 use DigitalZenWorks\ApiTest\APITester;
+use DigitalZenWorks\ApiTest\PageTester;
 use GuzzleHttp\Cookie\CookieJar;
 
 use PHPUnit\Framework\Attributes\Group;
@@ -49,6 +50,13 @@ final class APITests extends AbstractTestBase
 	private string $host;
 
 	/**
+	 * Page Tester object.
+	 *
+	 * @var PageTester
+	 */
+	private PageTester $pageTester;
+
+	/**
 	 * Set up before class method.
 	 *
 	 * @return void
@@ -69,6 +77,8 @@ final class APITests extends AbstractTestBase
 		$this->host = 'https://httpbin.org';
 
 		$this->apiTester = new APITester($this->host);
+		$this->pageTester =
+			new PageTester($this->host, 'text/html', 'text/html');
 	}
 
 	/**
@@ -239,6 +249,28 @@ final class APITests extends AbstractTestBase
 		$this->assertNotEmpty($url);
 		$this->assertIsString($url);
 		$this->assertEquals('https://httpbin.org/post', $url);
+	}
+
+	/**
+	 * Not found status test.
+	 * 
+	 * @return void
+	 */
+	#[Group('not-found')]
+	#[Test]
+	public function NotFound()
+	{
+		$endPoint = 'https://httpbin.org/status/404';
+
+		$options = new ApiOptions();
+		$options->contentRequired = false;
+		$options->errorExpected = true;
+
+		$this->pageTester->webPageTest('GET', $endPoint, null, $options);
+
+		$response = $this->pageTester->response;
+		$status = $response->getStatusCode();
+		$this->assertEquals(404, $status);
 	}
 
 	/**
