@@ -180,6 +180,17 @@ class APITester
 				$options['http_errors'] = false;
 			}
 
+			$additionalOptions = $apiOptions->guzzleAdditionalOptions;
+			$exists = !empty($additionalOptions);
+
+			if ($exists === true)
+			{
+				foreach ($additionalOptions as $key => $option)
+				{
+					$options[$key] = $option;
+				}
+			}
+
 			$request = new Request($method, $endPoint);
 
 			$response = $this->client->send($request, $options);

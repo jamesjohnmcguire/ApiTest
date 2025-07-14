@@ -22,6 +22,7 @@ require_once 'AbstractTestBase.php';
 
 use DigitalZenWorks\ApiTest\ApiOptions;
 use DigitalZenWorks\ApiTest\APITester;
+use GuzzleHttp\Cookie\CookieJar;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
@@ -174,6 +175,54 @@ final class APITests extends AbstractTestBase
 		$options = new ApiOptions();
 
 		$options->requestDataType = 'body';
+
+		$response = $this->apiTester->apiEndPointTest(
+			'POST', $endPoint, $jsonData, $options);
+
+		$this->assertNotEmpty($response);
+
+		$this->assertStringContainsString('james@example.com', $response);
+
+		$decodedResponse = json_decode($response, true);
+		$this->assertIsArray($decodedResponse);
+
+		$this->assertArrayHasKey('url', $decodedResponse);
+		$url = $decodedResponse['url'];
+		$this->assertNotEmpty($url);
+		$this->assertIsString($url);
+		$this->assertEquals('https://httpbin.org/post', $url);
+	}
+
+	/**
+	 * Post success additional data test.
+	 * 
+	 * @return void
+	 */
+	#[Group('post')]
+	#[Test]
+	public function PostWithJarSuccess()
+	{
+		$endPoint = 'https://httpbin.org/post';
+
+		$jsonData = $this->formatRequestJsonBody();
+
+		$options = new ApiOptions();
+
+		$options->requestDataType = 'body';
+
+		$cookies =
+		[
+			'some_id' => 123
+		];
+
+		$jar = CookieJar::fromArray($cookies, 'httpbin.org');
+
+		$guzzleAdditionalOptions =
+		[
+			'cookies' => $jar
+		];
+
+		$options->guzzleAdditionalOptions = $guzzleAdditionalOptions;
 
 		$response = $this->apiTester->apiEndPointTest(
 			'POST', $endPoint, $jsonData, $options);

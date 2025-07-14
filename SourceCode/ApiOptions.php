@@ -49,6 +49,13 @@ class ApiOptions
 	public bool $errorExpected = false;
 
 	/**
+	 * Additional Guzzle options to be included.
+	 *
+	 * @var null|array<string, bool|integer|object>
+	 */
+	public ?array $guzzleAdditionalOptions = null;
+
+	/**
 	 * Indicates whether included basic asserts should be tried.
 	 *
 	 * @var boolean
