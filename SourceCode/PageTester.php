@@ -45,7 +45,11 @@ class PageTester extends APITester
 	{
 		$options = new ApiOptions();
 
-		$options->dataType = $multiPartData;
+		if ($multiPartData === true)
+		{
+			$options->dataType = 'multipart';
+		}
+
 		$options->errorExpected = $isError;
 		$options->contentRequired = true;
 

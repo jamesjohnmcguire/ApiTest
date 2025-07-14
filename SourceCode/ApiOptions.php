@@ -33,12 +33,12 @@ class ApiOptions
 
 	/**
 	 * The data type for the request.
-	 * True if multipart form data (implying some data may be binary).
-	 * If a string, indicates the type of data ('body', 'json', 'form_params').
+	 * Can be one of the following values: 'body', 'form_params', 'json',
+	 * 'multipart'.
 	 *
-	 * @var boolean|string
+	 * @var null|string
 	 */
-	public bool|string $dataType = false;
+	public ?string $dataType = null;
 
 	/**
 	 * Indicates whether an error is expected.  This may be by a thown
@@ -55,8 +55,5 @@ class ApiOptions
 	 */
 	public function __construct()
 	{
-		$this->dataType = false;
-		$this->errorExpected = false;
-		$this->contentRequired = true;
 	}
 }

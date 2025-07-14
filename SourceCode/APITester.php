@@ -135,7 +135,7 @@ class APITester
 		{
 			if ($data !== null)
 			{
-				if ($apiOptions->dataType === true)
+				if ($apiOptions->dataType === 'multipart')
 				{
 					// Multipart - Usually forms with file uploads.
 					$options = ['multipart' => $data];
