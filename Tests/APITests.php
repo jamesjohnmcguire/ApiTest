@@ -160,14 +160,52 @@ final class APITests extends AbstractTestBase
 	 */
 	#[Group('post')]
 	#[Test]
-	public function postSuccess()
+	public function postFormParamsSuccess()
 	{
 		$endPoint = 'https://httpbin.org/post';
 
 		$data =
 		[
-			'name' => 'James',
-			'email' => 'james@example.com'
+			'name' => 'SomeUser',
+			'email' => 'somebody@example.com'
+		];
+
+		$options = new ApiOptions();
+
+		$options->requestDataType = 'form_params';
+
+		$response = $this->apiTester->apiEndPointTest(
+			'POST', $endPoint, $data, $options);
+
+		$this->assertNotEmpty($response);
+
+		$this->assertStringContainsString('somebody@example.com', $response);
+
+		$decodedResponse = json_decode($response, true);
+		$this->assertIsArray($decodedResponse);
+
+		$this->assertArrayHasKey('url', $decodedResponse);
+		$url = $decodedResponse['url'];
+		$this->assertNotEmpty($url);
+		$this->assertIsString($url);
+		$this->assertEquals('https://httpbin.org/post', $url);
+	}
+
+	/**
+	 * Post success test.
+	 * 
+	 * @return void
+	 */
+	#[Group('post')]
+	#[Test]
+	public function postJsonSuccess()
+	{
+		$endPoint = 'https://httpbin.org/post';
+
+		$data =
+		[
+			'name' => 'SomeUser',
+			'email' => 'somebody@example.com'
 		];
 
 		$options = new ApiOptions();
@@ -179,7 +217,7 @@ final class APITests extends AbstractTestBase
 
 		$this->assertNotEmpty($response);
 
-		$this->assertStringContainsString('james@example.com', $response);
+		$this->assertStringContainsString('somebody@example.com', $response);
 
 		$decodedResponse = json_decode($response, true);
 		$this->assertIsArray($decodedResponse);
