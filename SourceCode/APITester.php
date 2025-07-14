@@ -69,41 +69,41 @@ class APITester
 	private Client $client;
 
 	/**
-	 * Response data type.
+	 * Response content data type.
 	 *
 	 * @var string
 	 */
-	private string $responseDataType;
+	private string $responseContentType;
 
 	/**
-	 * Request data type.
+	 * Request content data type.
 	 *
 	 * @var string
 	 */
-	private string $requestDataType;
+	private string $requestContentType;
 
 	/**
 	 * Constructor method.
 	 *
-	 * @param string $host             The host for the tests.
-	 * @param string $requestDataType  The request data type.
-	 * @param string $responseDataType The response data type.
+	 * @param string $host                The host for the tests.
+	 * @param string $requestContentType  The request data type.
+	 * @param string $responseContentType The response data type.
 	 */
 	public function __construct(
 		string $host,
-		string $requestDataType = 'application/json',
-		string $responseDataType = 'application/json')
+		string $requestContentType = 'application/json',
+		string $responseContentType = 'application/json')
 	{
-		$this->requestDataType = $requestDataType;
-		$this->responseDataType = $responseDataType;
+		$this->requestContentType = $requestContentType;
+		$this->responseContentType = $responseContentType;
 
 		$options =
 		[
 			'base_uri' => $host,
 			'headers'  =>
 			[
-				'Content-Type' => $this->requestDataType,
-				'Accept'       => $this->responseDataType
+				'Content-Type' => $this->requestContentType,
+				'Accept'       => $this->responseContentType
 			]
 		];
 
@@ -135,18 +135,18 @@ class APITester
 		{
 			if ($data !== null)
 			{
-				if ($apiOptions->dataType === 'multipart')
+				if ($apiOptions->requestDataType === 'multipart')
 				{
 					// Multipart - Usually forms with file uploads.
 					$options = ['multipart' => $data];
 				}
 				else
 				{
-					$isString = is_string($apiOptions->dataType);
+					$isString = is_string($apiOptions->requestDataType);
 
 					if ($isString === true)
 					{
-						$options = [$apiOptions->dataType => $data];
+						$options = [$apiOptions->requestDataType => $data];
 					}
 					else
 					{
@@ -165,7 +165,7 @@ class APITester
 			$handlerStack->push(Middleware::history($this->history));
 			$options['handler'] = $handlerStack;
 
-			if ($this->responseDataType === 'application/json')
+			if ($this->responseContentType === 'application/json')
 			{
 				$expectedJson = true;
 			}
@@ -258,7 +258,7 @@ class APITester
 		$options = new ApiOptions();
 
 		$options->contentRequired = $contentRequired;
-		$options->dataType = $dataType;
+		$options->requestDataType = $dataType;
 
 		if ($isError === true || $errorRequired === true)
 		{

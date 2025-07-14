@@ -139,7 +139,7 @@ final class APITests extends AbstractTestBase
 
 		$options = new ApiOptions();
 
-		$options->dataType = 'json';
+		$options->requestDataType = 'json';
 
 		$response = $this->apiTester->apiEndPointTest(
 			'POST', $endPoint, $data, $options);
@@ -173,7 +173,7 @@ final class APITests extends AbstractTestBase
 
 		$options = new ApiOptions();
 
-		$options->dataType = 'body';
+		$options->requestDataType = 'body';
 
 		$response = $this->apiTester->apiEndPointTest(
 			'POST', $endPoint, $jsonData, $options);

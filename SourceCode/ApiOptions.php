@@ -38,7 +38,7 @@ class ApiOptions
 	 *
 	 * @var null|string
 	 */
-	public ?string $dataType = null;
+	public ?string $requestDataType = null;
 
 	/**
 	 * Indicates whether an error is expected.  This may be by a thown
