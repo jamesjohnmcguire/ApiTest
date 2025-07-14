@@ -49,6 +49,13 @@ class ApiOptions
 	public bool $errorExpected = false;
 
 	/**
+	 * Indicates whether included basic asserts should be tried.
+	 *
+	 * @var boolean
+	 */
+	public bool $tryBasicAsserts = true;
+
+	/**
 	 * ApiOptions constructor.
 	 *
 	 * Initializes the API options with default values.

@@ -185,12 +185,16 @@ class APITester
 			$response = $this->client->send($request, $options);
 			$this->response = $response;
 
-			self::checkStatus($response, $apiOptions->errorExpected);
+			self::checkStatus(
+				$response,
+				$apiOptions->errorExpected,
+				$apiOptions->tryBasicAsserts);
 			$responseContent = self::checkBody(
 				$response,
 				$expectedJson,
 				$apiOptions->errorExpected,
-				$apiOptions->contentRequired);
+				$apiOptions->contentRequired,
+				$apiOptions->tryBasicAsserts);
 		}
 		// Guzzle high level super class exception.
 		catch (BadResponseException $exception)
@@ -200,7 +204,10 @@ class APITester
 		// Guzzle low level super class exception.
 		catch (RequestException $exception)
 		{
-			$this->displayException($exception, $apiOptions->errorExpected);
+			$this->displayException(
+				$exception,
+				$apiOptions->errorExpected,
+				$apiOptions->tryBasicAsserts);
 		}
 		catch (\Exception $exception)
 		{
@@ -279,6 +286,8 @@ class APITester
 	 *                                           response or not.
 	 * @param boolean           $contentRequired Indicates whether content is
 	 *                                           required in the response body.
+	 * @param boolean           $tryBasicAsserts Indicates whether to try
+	 *                                           running basic asserts or not.
 	 *
 	 * @return string
 	 */
@@ -286,14 +295,19 @@ class APITester
 		ResponseInterface $response,
 		bool $expectedJson = true,
 		bool $errorExpected = false,
-		bool $contentRequired = true) : string
+		bool $contentRequired = true,
+		bool $tryBasicAsserts = true) : string
 	{
 		$stream = $response->getBody();
 		$body = $stream->getContents();
 
 		if ($expectedJson === true)
 		{
-			assertJson($body);
+			if ($tryBasicAsserts === true)
+			{
+				assertJson($body);
+			}
+
 			$data = json_decode($body, true);
 		}
 		else
@@ -301,14 +315,14 @@ class APITester
 			$data = $body;
 		}
 
-		if ($contentRequired === true)
+		if ($contentRequired === true && $tryBasicAsserts === true)
 		{
 			assertNotEmpty($data);
 		}
 
 		$isArray = is_array($data);
 
-		if ($isArray === true)
+		if ($isArray === true && $tryBasicAsserts === true)
 		{
 			if ($errorExpected === false)
 			{
@@ -326,45 +340,59 @@ class APITester
 	/**
 	 * Check status method.
 	 *
-	 * @param \Psr\Http\Message\ResponseInterface $response      The PSR7
-	 *                                                           response
-	 *                                                           object.
-	 * @param boolean                             $errorExpected Indicates
-	 *                                                           whether an
-	 *                                                           error is
-	 *                                                           expected or
-	 *                                                           not.
+	 * @param \Psr\Http\Message\ResponseInterface $response        The PSR7
+	 *                                                             response
+	 *                                                             object.
+	 * @param boolean                             $errorExpected   Indicates
+	 *                                                             whether an
+	 *                                                             error is
+	 *                                                             expected or
+	 *                                                             not.
+	 * @param boolean                             $tryBasicAsserts Indicates
+	 *                                                             whether to
+	 *                                                             try running
+	 *                                                             basic asserts
+	 *                                                             or not.
 	 *
-	 * @return void
+	 * @return integer
 	 */
 	public static function checkStatus(
 		ResponseInterface $response,
-		bool $errorExpected = false)
+		bool $errorExpected = false,
+		bool $tryBasicAsserts = true) : int
 	{
 		$status = $response->getStatusCode();
 
-		if ($errorExpected === true)
+		if ($tryBasicAsserts === true)
 		{
-			assertNotEquals(200, $status);
+			if ($errorExpected === true)
+			{
+				assertNotEquals(200, $status);
+			}
+			else
+			{
+				assertEquals(200, $status);
+			}
 		}
-		else
-		{
-			assertEquals(200, $status);
-		}
+
+		return $status;
 	}
 
 	/**
 	 * Display exception method.
 	 *
-	 * @param object  $exception     The exception to process.
-	 * @param boolean $errorExpected Indicates whether an error is expected
-	 *                               or not.
+	 * @param object  $exception       The exception to process.
+	 * @param boolean $errorExpected   Indicates whether an error is expected
+	 *                                 or not.
+	 * @param boolean $tryBasicAsserts Indicates whether to try running basic
+	 *                                 asserts or not.
 	 *
 	 * @return void
 	 */
 	private static function displayException(
 		object $exception,
-		bool $errorExpected)
+		bool $errorExpected,
+		bool $tryBasicAsserts = true)
 	{
 		$class = get_class($exception);
 		echo "Exception class: $class\n";
@@ -393,6 +421,9 @@ class APITester
 			}
 		}
 
-		assertTrue($errorExpected);
+		if ($tryBasicAsserts === true)
+		{
+			assertTrue($errorExpected);
+		}
 	}
 }
