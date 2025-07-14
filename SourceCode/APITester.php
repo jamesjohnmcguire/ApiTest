@@ -133,37 +133,7 @@ class APITester
 
 		try
 		{
-			if ($data !== null)
-			{
-				if ($apiOptions->requestDataType === 'multipart')
-				{
-					// Multipart - Usually forms with file uploads.
-					$options = ['multipart' => $data];
-				}
-				else
-				{
-					$isString = is_string($apiOptions->requestDataType);
-
-					if ($isString === true)
-					{
-						$options = [$apiOptions->requestDataType => $data];
-					}
-					else
-					{
-						// Normal form data.
-						$options = ['form_params' => $data];
-					}
-				}
-			}
-			else
-			{
-				$options = [];
-			}
-
-			// Track the history of requests.
-			$handlerStack = HandlerStack::create();
-			$handlerStack->push(Middleware::history($this->history));
-			$options['handler'] = $handlerStack;
+			$options = $this->getGuzzleOptions($data, $apiOptions);
 
 			if ($this->responseContentType === 'application/json')
 			{
@@ -172,23 +142,6 @@ class APITester
 			else
 			{
 				$expectedJson = false;
-			}
-
-			if ($apiOptions->errorExpected === true)
-			{
-				// Disable throwing exceptions on an HTTP protocol errors.
-				$options['http_errors'] = false;
-			}
-
-			$additionalOptions = $apiOptions->guzzleAdditionalOptions;
-			$exists = !empty($additionalOptions);
-
-			if ($exists === true)
-			{
-				foreach ($additionalOptions as $key => $option)
-				{
-					$options[$key] = $option;
-				}
 			}
 
 			$request = new Request($method, $endPoint);
@@ -436,5 +389,66 @@ class APITester
 		{
 			assertTrue($errorExpected);
 		}
+	}
+
+	/**
+	 * Get guzzle options.
+	 *
+	 * @param null|array<string>|string $data       The JSON data to process.
+	 * @param ApiOptions                $apiOptions The options object.
+	 *                                              Contains various options.
+	 *
+	 * @return array<string, boolean|integer|string|object>
+	 */
+	private function getGuzzleOptions(
+		null | array | string $data,
+		ApiOptions $apiOptions) : array
+	{
+		$options = [];
+
+		if ($data !== null &&
+			($apiOptions->requestDataType === 'body' ||
+			$apiOptions->requestDataType === 'form_params' ||
+			$apiOptions->requestDataType === 'json'	||
+			$apiOptions->requestDataType === 'multipart'))
+		{
+			$options = [$apiOptions->requestDataType => $data];
+		}
+
+		// Track the history of requests.
+		$handlerStack = $this->getHandlerStack();
+		$options['handler'] = $handlerStack;
+
+		if ($apiOptions->errorExpected === true)
+		{
+			// Disable throwing exceptions on an HTTP protocol errors.
+			$options['http_errors'] = false;
+		}
+
+		$additionalOptions = $apiOptions->guzzleAdditionalOptions;
+		$exists = !empty($additionalOptions);
+
+		if ($exists === true)
+		{
+			foreach ($additionalOptions as $key => $option)
+			{
+				$options[$key] = $option;
+			}
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Get handler stack.
+	 *
+	 * @return HandlerStack
+	 */
+	private function getHandlerStack() : HandlerStack
+	{
+		$handlerStack = HandlerStack::create();
+		$handlerStack->push(Middleware::history($this->history));
+
+		return $handlerStack;
 	}
 }
