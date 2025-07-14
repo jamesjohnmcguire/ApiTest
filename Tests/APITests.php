@@ -201,9 +201,9 @@ final class APITests extends AbstractTestBase
 	{
 		$postData =
 		[
-			'userName'    => 'JamesMc',
-			'email' => 'james@example.com',
-			'title'       => 'New anime office'
+			'userName' => 'JamesMc',
+			'email'    => 'james@example.com',
+			'title'    => 'New Example'
 		];
 
 		return $postData;
