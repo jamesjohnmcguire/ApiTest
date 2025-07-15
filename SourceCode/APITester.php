@@ -50,9 +50,9 @@ class APITester
 	/**
 	 * The history container.
 	 *
-	 * @var array<object>
+	 * @var array<int, array<string, mixed>>
 	 */
-	public $history = [];
+	public array $history = [];
 
 	/**
 	 * The complete response object.
@@ -229,7 +229,18 @@ class APITester
 		$options = new ApiOptions();
 
 		$options->contentRequired = $contentRequired;
-		$options->requestDataType = $dataType;
+
+		if ($dataType === true)
+		{
+			$options->requestDataType = 'multipart';
+		}
+
+		$isString = is_string($dataType);
+
+		if ($isString === true)
+		{
+			$options->requestDataType = $dataType;
+		}
 
 		if ($isError === true || $errorRequired === true)
 		{
@@ -345,16 +356,16 @@ class APITester
 	/**
 	 * Display exception method.
 	 *
-	 * @param object  $exception       The exception to process.
-	 * @param boolean $errorExpected   Indicates whether an error is expected
-	 *                                 or not.
-	 * @param boolean $tryBasicAsserts Indicates whether to try running basic
-	 *                                 asserts or not.
+	 * @param RequestException $exception       The exception to process.
+	 * @param boolean          $errorExpected   Indicates whether an error is
+	 *                                          expected or not.
+	 * @param boolean          $tryBasicAsserts Indicates whether to try running
+	 *                                          basic asserts or not.
 	 *
 	 * @return void
 	 */
 	private static function displayException(
-		object $exception,
+		RequestException $exception,
 		bool $errorExpected,
 		bool $tryBasicAsserts = true)
 	{
@@ -398,7 +409,7 @@ class APITester
 	 * @param ApiOptions                $apiOptions The options object.
 	 *                                              Contains various options.
 	 *
-	 * @return array<string, boolean|integer|string|object>
+	 * @return array<string, array<string>|boolean|integer|string|object>
 	 */
 	private function getGuzzleOptions(
 		null | array | string $data,
@@ -439,6 +450,8 @@ class APITester
 		return $options;
 	}
 
+	// phpcs:disable Squiz.Commenting.BlockComment.WrongStart
+	// phpcs:disable Squiz.Commenting.InlineComment.DocBlock
 	/**
 	 * Get handler stack.
 	 *
@@ -447,8 +460,15 @@ class APITester
 	private function getHandlerStack() : HandlerStack
 	{
 		$handlerStack = HandlerStack::create();
-		$handlerStack->push(Middleware::history($this->history));
+
+		/**
+		 * @var array<int, array<string, mixed>> $history
+		 */
+		$history = &$this->history;
+		$handlerStack->push(Middleware::history($history));
 
 		return $handlerStack;
 	}
+	// phpcs:enable Squiz.Commenting.BlockComment.WrongStart
+	// phpcs:enable Squiz.Commenting.InlineComment.DocBlock
 }

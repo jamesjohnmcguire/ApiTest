@@ -331,14 +331,20 @@ final class APITests extends AbstractTestBase
 	/**
 	 * Format Request JSON body method.
 	 *
-	 * @return string
+	 * @return null|string
 	 */
-	private function formatRequestJsonBody() : string
+	private function formatRequestJsonBody() : ?string
 	{
+		$jsonData = null;
 		$postData = $this->formatRequestBody();
 
 		$jsonBody = json_encode($postData);
 
-		return $jsonBody;
+		if ($jsonBody !== false)
+		{
+			$jsonData = $jsonBody;
+		}
+
+		return $jsonData;
 	}
 }
