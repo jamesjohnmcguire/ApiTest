@@ -66,7 +66,7 @@ The main method parameters are:
 TestOptions is an object with the following properties:
 
 | Property                | Default | Description                            |
-| ----------------------- | ------------------------------------------------ |
+| ----------------------- | ------- | -------------------------------------- |
 | contentRequired         | true    | Indicates whether content is required  |
 |                         |         | in the response body.                  |
 | errorExpected           | false   | Indicates whether an error is          |
