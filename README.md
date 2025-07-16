@@ -53,18 +53,29 @@ final class UnitTests extends TestCase
 
 The main method parameters are:
 
-| Type:          | Parameter:                                 |
-| -------------- | ------------------------------------------ |
-| string         | The HTTP method to use.                    |
-| string         | The API end point.                         |
-| ?string        | The request data.                          |
-| bool or string | The data type.  True, if it is multipart   |
-|                | form data. Implying some of the data may   |
-|                | be binary. If it is false, it will then be |
-|                | of the 'form_params' type. If it is a      |
-|                | string, the string indicates the type of   |
-|                | data ('body', 'json', 'form_params',       |
-|                | 'query', 'form_params').                   |
+| Type:      | Parameter:                                         |
+| ---------- | -------------------------------------------------- |
+| string     | The HTTP method to use.                            |
+| string     | The API end point.                                 |
+| ?string    | The request data.                                  |
+| ApiOptions | A set of options. Refer to ApiOptions for details. |
+
+ApiOptions is an object with the following properties:
+
+| Property                | Default | Description                            |
+| ----------------------- | ------------------------------------------------ |
+| contentRequired         | true    | Indicates whether content is required  |
+|                         |         | in the response body.                  |
+| errorExpected           | false   | Indicates whether an error is          |
+|                         |         | expected.                              |
+| guzzleAdditionalOptions | null    | Additional Guzzle options to be        |
+|                         |         | included.                              |
+| requestDataType         | null    | The data type for the request.  Can be |
+|                         |         | one of the following values: 'body',   |
+|                         |         | 'form_params', 'json' or 'multipart'.  |
+| tryBasicAsserts         | true    | Indicates whether included basic       |
+|                         |         | assertions should be tried.            |
+
 
 ### Page or End-to-End Testing
 
@@ -85,7 +96,7 @@ final class UnitTests extends TestCase
 
         $endPoint = 'https://httpbin.org/get';
 
-        $content = $this->TestSitePage($endPoint);
+        $content = $pageTester->webPageTest('GET', $endPoint, null);
 
         $this->assertNotNull($content);
         $this->assertNotEmpty($content);
@@ -94,6 +105,10 @@ final class UnitTests extends TestCase
     }
 }
 ```
+### Additional Examples
+
+You can refer to the unit tests for additional example usage.
+
 
 ## Additional Notes
 This uses Guzzle to process the API request.
