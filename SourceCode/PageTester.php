@@ -7,7 +7,7 @@
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
  * @copyright 2023 - 2025 James John McGuire <jamesjohnmcguire@gmail.com>
  * @license   MIT https://opensource.org/licenses/MIT
- * @version   1.5.15
+ * @version   1.6.32
  * @link      https://github.com/jamesjohnmcguire/ApiTest
  */
 
@@ -36,7 +36,7 @@ class PageTester extends APITester
 	 *
 	 * @return string
 	 *
-	 * @deprecated since v1.5.18, use webPageTest() instead.
+	 * @deprecated since v1.6.32, use webPageTest() instead.
 	 */
 	public function testPage(
 		string $method,

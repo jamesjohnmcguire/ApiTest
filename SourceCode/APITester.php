@@ -7,7 +7,7 @@
  * @author    James John McGuire <jamesjohnmcguire@gmail.com>
  * @copyright 2023 - 2025 James John McGuire <jamesjohnmcguire@gmail.com>
  * @license   MIT https://opensource.org/licenses/MIT
- * @version   1.5.15
+ * @version   1.6.32
  * @link      https://github.com/jamesjohnmcguire/ApiTest
  */
 
@@ -215,7 +215,7 @@ class APITester
 	 *
 	 * @return string
 	 *
-	 * @deprecated since v1.5.18, use apiEndPointTest() instead.
+	 * @deprecated since v1.6.32, use apiEndPointTest() instead.
 	 */
 	public function testApiEndPoint(
 		string $method,
