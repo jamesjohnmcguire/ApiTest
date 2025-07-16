@@ -20,7 +20,7 @@ $root = dirname(__DIR__, 1);
 require_once $root . '/vendor/autoload.php';
 require_once 'AbstractTestBase.php';
 
-use DigitalZenWorks\ApiTest\ApiOptions;
+use DigitalZenWorks\ApiTest\TestOptions;
 use DigitalZenWorks\ApiTest\APITester;
 use DigitalZenWorks\ApiTest\PageTester;
 use GuzzleHttp\Cookie\CookieJar;
@@ -142,7 +142,7 @@ final class APITests extends AbstractTestBase
 	{
 		$endPoint = 'https://httpbin.org/status/404';
 
-		$options = new ApiOptions();
+		$options = new TestOptions();
 		$options->contentRequired = false;
 		$options->errorExpected = true;
 
@@ -170,7 +170,7 @@ final class APITests extends AbstractTestBase
 			'email' => 'somebody@example.com'
 		];
 
-		$options = new ApiOptions();
+		$options = new TestOptions();
 
 		$options->requestDataType = 'form_params';
 
@@ -208,7 +208,7 @@ final class APITests extends AbstractTestBase
 			'email' => 'somebody@example.com'
 		];
 
-		$options = new ApiOptions();
+		$options = new TestOptions();
 
 		$options->requestDataType = 'json';
 
@@ -242,7 +242,7 @@ final class APITests extends AbstractTestBase
 
 		$jsonData = $this->formatRequestJsonBody();
 
-		$options = new ApiOptions();
+		$options = new TestOptions();
 
 		$options->requestDataType = 'body';
 
@@ -276,7 +276,7 @@ final class APITests extends AbstractTestBase
 
 		$jsonData = $this->formatRequestJsonBody();
 
-		$options = new ApiOptions();
+		$options = new TestOptions();
 
 		$options->requestDataType = 'body';
 

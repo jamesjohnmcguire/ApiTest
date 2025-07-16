@@ -1,7 +1,7 @@
 <?php
 
 /**
- * API Options class.
+ * Test Options class.
  *
  * Represents options for API endpoint testing.
  *
@@ -18,11 +18,11 @@ declare(strict_types=1);
 namespace DigitalZenWorks\ApiTest;
 
 /**
- * Class ApiOptions
+ * Class TestOptions
  *
  * Contains configuration options for API endpoint testing.
  */
-class ApiOptions
+class TestOptions
 {
 	/**
 	 * Indicates whether content is required in the response body.
@@ -63,7 +63,7 @@ class ApiOptions
 	public bool $tryBasicAsserts = true;
 
 	/**
-	 * ApiOptions constructor.
+	 * TestOptions constructor.
 	 *
 	 * Initializes the API options with default values.
 	 */

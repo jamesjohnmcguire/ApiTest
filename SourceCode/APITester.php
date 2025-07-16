@@ -113,11 +113,11 @@ class APITester
 	/**
 	 * Test API end point method.
 	 *
-	 * @param string                    $method     The HTTP method to use.
-	 * @param string                    $endPoint   The API end point.
-	 * @param null|array<string>|string $data       The JSON data to process.
-	 * @param ApiOptions                $apiOptions The options object.
-	 *                                              Contains various options.
+	 * @param string                    $method      The HTTP method to use.
+	 * @param string                    $endPoint    The API end point.
+	 * @param null|array<string>|string $data        The JSON data to process.
+	 * @param TestOptions               $testOptions The options object.
+	 *                                               Contains various options.
 	 *
 	 * @throws \Exception If an unexpected exception occurs during the request.
 	 *
@@ -127,13 +127,13 @@ class APITester
 		string $method,
 		string $endPoint,
 		null | array | string $data = null,
-		ApiOptions $apiOptions = new ApiOptions()) : string
+		TestOptions $testOptions = new TestOptions()) : string
 	{
 		$responseContent = null;
 
 		try
 		{
-			$options = $this->getGuzzleOptions($data, $apiOptions);
+			$options = $this->getGuzzleOptions($data, $testOptions);
 
 			if ($this->responseContentType === 'application/json')
 			{
@@ -151,31 +151,31 @@ class APITester
 
 			self::checkStatus(
 				$response,
-				$apiOptions->errorExpected,
-				$apiOptions->tryBasicAsserts);
+				$testOptions->errorExpected,
+				$testOptions->tryBasicAsserts);
 			$responseContent = self::checkBody(
 				$response,
 				$expectedJson,
-				$apiOptions->errorExpected,
-				$apiOptions->contentRequired,
-				$apiOptions->tryBasicAsserts);
+				$testOptions->errorExpected,
+				$testOptions->contentRequired,
+				$testOptions->tryBasicAsserts);
 		}
 		// Guzzle high level super class exception.
 		catch (BadResponseException $exception)
 		{
-			$this->displayException($exception, $apiOptions->errorExpected);
+			$this->displayException($exception, $testOptions->errorExpected);
 		}
 		// Guzzle low level super class exception.
 		catch (RequestException $exception)
 		{
 			$this->displayException(
 				$exception,
-				$apiOptions->errorExpected,
-				$apiOptions->tryBasicAsserts);
+				$testOptions->errorExpected,
+				$testOptions->tryBasicAsserts);
 		}
 		catch (\Exception $exception)
 		{
-			if ($apiOptions->errorExpected === false)
+			if ($testOptions->errorExpected === false)
 			{
 				// Not expecting any general exceptions.
 				$class = get_class($exception);
@@ -226,7 +226,7 @@ class APITester
 		bool $errorRequired = false,
 		bool $contentRequired = true) : string
 	{
-		$options = new ApiOptions();
+		$options = new TestOptions();
 
 		$options->contentRequired = $contentRequired;
 
@@ -405,38 +405,38 @@ class APITester
 	/**
 	 * Get guzzle options.
 	 *
-	 * @param null|array<string>|string $data       The JSON data to process.
-	 * @param ApiOptions                $apiOptions The options object.
-	 *                                              Contains various options.
+	 * @param null|array<string>|string $data        The JSON data to process.
+	 * @param TestOptions               $testOptions The options object.
+	 *                                               Contains various options.
 	 *
 	 * @return array<string, array<string>|boolean|integer|string|object>
 	 */
 	private function getGuzzleOptions(
 		null | array | string $data,
-		ApiOptions $apiOptions) : array
+		TestOptions $testOptions) : array
 	{
 		$options = [];
 
 		if ($data !== null &&
-			($apiOptions->requestDataType === 'body' ||
-			$apiOptions->requestDataType === 'form_params' ||
-			$apiOptions->requestDataType === 'json'	||
-			$apiOptions->requestDataType === 'multipart'))
+			($testOptions->requestDataType === 'body' ||
+			$testOptions->requestDataType === 'form_params' ||
+			$testOptions->requestDataType === 'json' ||
+			$testOptions->requestDataType === 'multipart'))
 		{
-			$options = [$apiOptions->requestDataType => $data];
+			$options = [$testOptions->requestDataType => $data];
 		}
 
 		// Track the history of requests.
 		$handlerStack = $this->getHandlerStack();
 		$options['handler'] = $handlerStack;
 
-		if ($apiOptions->errorExpected === true)
+		if ($testOptions->errorExpected === true)
 		{
 			// Disable throwing exceptions on an HTTP protocol errors.
 			$options['http_errors'] = false;
 		}
 
-		$additionalOptions = $apiOptions->guzzleAdditionalOptions;
+		$additionalOptions = $testOptions->guzzleAdditionalOptions;
 		$exists = !empty($additionalOptions);
 
 		if ($exists === true)

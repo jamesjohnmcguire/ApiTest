@@ -45,7 +45,7 @@ class PageTester extends APITester
 		bool $multiPartData = false,
 		bool $isError = false) : string
 	{
-		$options = new ApiOptions();
+		$options = new TestOptions();
 
 		if ($multiPartData === true)
 		{
@@ -67,11 +67,11 @@ class PageTester extends APITester
 	/**
 	 * Test web page method.
 	 *
-	 * @param string                    $method     The HTTP method to use.
-	 * @param string                    $endPoint   The API end point.
-	 * @param null|array<string>|string $data       The JSON data to process.
-	 * @param ApiOptions                $apiOptions The options object.
-	 *                                              Contains various options.
+	 * @param string                    $method      The HTTP method to use.
+	 * @param string                    $endPoint    The API end point.
+	 * @param null|array<string>|string $data        The JSON data to process.
+	 * @param TestOptions               $testOptions The options object.
+	 *                                               Contains various options.
 	 *
 	 * @throws \Exception If an unexpected exception occurs during the request.
 	 *
@@ -81,13 +81,13 @@ class PageTester extends APITester
 		string $method,
 		string $endPoint,
 		null | array | string $data = null,
-		ApiOptions $apiOptions = new ApiOptions()) : ?string
+		TestOptions $testOptions = new TestOptions()) : ?string
 	{
 		$responseContent = $this->apiEndPointTest(
 			$method,
 			$endPoint,
 			$data,
-			$apiOptions);
+			$testOptions);
 
 		return $responseContent;
 	}

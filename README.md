@@ -53,14 +53,14 @@ final class UnitTests extends TestCase
 
 The main method parameters are:
 
-| Type:      | Parameter:                                         |
-| ---------- | -------------------------------------------------- |
-| string     | The HTTP method to use.                            |
-| string     | The API end point.                                 |
-| ?string    | The request data.                                  |
-| ApiOptions | A set of options. Refer to ApiOptions for details. |
+| Type:       | Parameter:                                          |
+| ----------- | --------------------------------------------------- |
+| string      | The HTTP method to use.                             |
+| string      | The API end point.                                  |
+| ?string     | The request data.                                   |
+| TestOptions | A set of options. Refer to TestOptions for details. |
 
-ApiOptions is an object with the following properties:
+TestOptions is an object with the following properties:
 
 | Property                | Default | Description                            |
 | ----------------------- | ------------------------------------------------ |
