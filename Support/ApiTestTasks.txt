@@ -1,2 +1,4 @@
-Rename repo	ApiTest	to PhpApiTest?
-APITester vs ApiTester  class_alias(APITester::class, 'YourNamespace\ApiTester');
+Review Namespace, Class Names
+Add Tests for each option in ApiOptions
+ReadMe Details	tryBasicAsserts
+ReadMe Improve main api details
