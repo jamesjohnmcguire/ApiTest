@@ -79,7 +79,6 @@ TestOptions is an object with the following properties:
 | tryBasicAsserts         | true    | Indicates whether included basic       |
 |                         |         | assertions should be tried.            |
 
-
 ### Page or End-to-End Testing
 
 This also supports testing HTML pages directly.  You can call it like this:
