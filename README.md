@@ -65,19 +65,31 @@ The main method parameters are:
 
 TestOptions is an object with the following properties:
 
-| Property                | Default | Description                            |
-| ----------------------- | ------- | -------------------------------------- |
-| contentRequired         | true    | Indicates whether content is required  |
-|                         |         | in the response body.                  |
-| errorExpected           | false   | Indicates whether an error is          |
-|                         |         | expected.                              |
-| guzzleAdditionalOptions | null    | Additional Guzzle options to be        |
-|                         |         | included.                              |
-| requestDataType         | null    | The data type for the request.  Can be |
-|                         |         | one of the following values: 'body',   |
-|                         |         | 'form_params', 'json' or 'multipart'.  |
-| tryBasicAsserts         | true    | Indicates whether included basic       |
-|                         |         | assertions should be tried.            |
+| Property                | Default                    | Description          |
+| ----------------------- | -------------------------- | -------------------- |
+| contentRequired         | true                       | Indicates whether    |
+|                         |                            | content is required  |
+|                         |                            | in the response      |
+|                         |                            | body.                |
+| errorExpected           | false                      | Indicates whether an |
+|                         |                            | error is expected.   |
+| guzzleAdditionalOptions | null                       | Additional Guzzle    |
+|                         |                            | options to be        |
+|                         |                            | included.            |
+| requestDataType         | null                       | The data type for    |
+|                         |                            | the request.  Can be |
+|                         |                            | one of the following |
+|                         |                            | values: 'body',      |
+|                         |                            | 'form_params',       |
+|                         |                            | 'json' or            |
+|                         |                            | 'multipart'.         |
+| tryBasicAsserts         | true                       | Indicates whether    |
+|                         |                            | included basic       |
+|                         |                            | assertions should be |
+|                         |                            | tried.               |
+| userAgent               | <recent Chrome user agent> | The user agent to    |
+|                         |                            | include in           |
+|                         |                            | the headers.         |
 
 ### Page or End-to-End Testing
 
