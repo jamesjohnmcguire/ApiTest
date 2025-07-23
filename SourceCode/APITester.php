@@ -447,6 +447,13 @@ class APITester
 			}
 		}
 
+		// Do this after processing guzzleAdditionalOptions,
+		// as it more specific.
+		$options['headers'] =
+		[
+			'User-Agent' => $testOptions->userAgent
+		];
+
 		return $options;
 	}
 
