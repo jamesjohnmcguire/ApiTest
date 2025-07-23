@@ -8,6 +8,9 @@ composer install --prefer-dist
 echo outdated:
 composer outdated --direct
 
+echo Checking syntax...
+vendor/bin/parallel-lint --exclude .git --exclude Support --exclude vendor .
+
 echo Checking code styles...
 vendor/bin/phpcs -sp --standard=ruleset.xml SourceCode
 

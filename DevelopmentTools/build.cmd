@@ -7,6 +7,9 @@ CALL composer install --prefer-dist
 ECHO outdated:
 CALL composer outdated --direct
 
+ECHO Checking syntax...
+vendor/bin/parallel-lint --exclude .git --exclude Support --exclude vendor .
+
 ECHO Checking code styles...
 php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
 CALL vendor\bin\phpstan.phar.bat analyse
