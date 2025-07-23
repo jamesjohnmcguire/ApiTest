@@ -8,7 +8,7 @@ ECHO outdated:
 CALL composer outdated --direct
 
 ECHO Checking syntax...
-vendor/bin/parallel-lint --exclude .git --exclude Support --exclude vendor .
+CALL vendor/bin/parallel-lint --exclude .git --exclude Support --exclude vendor .
 
 ECHO Checking code styles...
 php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
@@ -27,7 +27,7 @@ if "%~2"=="" GOTO error
 
 IF EXIST digitalzenworks-apitest.zip DEL /Q digitalzenworks-apitest.zip
 7z a digitalzenworks-apitest.zip . -x!.git -x!.vscode -x!vendor -x!ApiTest.code-workspace
-
+PAUSE
 gh release create v%2 --notes %2 digitalzenworks-apitest.zip
 DEL /Q digitalzenworks-apitest.zip
 
