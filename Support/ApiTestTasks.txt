@@ -1,4 +1,2 @@
 Review Namespace, Class Names
 Add Tests for each option in ApiOptions
-ReadMe Details	tryBasicAsserts
-ReadMe Improve main api details
