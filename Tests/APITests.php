@@ -312,6 +312,26 @@ final class APITests extends AbstractTestBase
 	}
 
 	/**
+	 * Post success additional data test.
+	 * 
+	 * @return void
+	 */
+	#[Group('post')]
+	#[Test]
+	public function optionsSetUserAgent()
+	{
+		$userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' .
+			'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 ' .
+			'Safari/537.36';
+		$expected = $userAgent;
+
+		$options = new TestOptions();
+		$options->userAgent = $userAgent;
+
+		$this->assertEquals($expected, $options->userAgent);
+	}
+
+	/**
 	 * Format request body method.
 	 *
 	 * @return array<string>

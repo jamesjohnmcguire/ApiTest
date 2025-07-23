@@ -63,6 +63,15 @@ class TestOptions
 	public bool $tryBasicAsserts = true;
 
 	/**
+	 * The user agent for the request.
+	 *
+	 * @var string
+	 */
+	public string $userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' .
+		'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 ' .
+		'Safari/537.36';
+
+	/**
 	 * TestOptions constructor.
 	 *
 	 * Initializes the API options with default values.
