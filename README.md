@@ -54,7 +54,7 @@ final class UnitTests extends TestCase
 )
 ```
 
-The main method parameters are:
+The apiEndPointTest parameters are:
 
 | Parameter   | Type        | Parameter                                       |
 | ----------- | ----------- | ----------------------------------------------- |
@@ -151,6 +151,20 @@ You can also access the Guzzle history (handler) object by accessing the public 
 ```
 
 This can be useful for tracking redirects, among other things.
+
+### Details on `tryBasicAsserts`
+
+If `tryBasicAsserts` is true, several basic assertions will be performed based on the provided options and response. Below is a summary of the assertions, their purposes, and the conditions under which they are applied.
+
+| Assertion | Description | Condition |
+|-----------|-------------|-----------|
+| `assertNotEmpty($body)` | Verifies that the content body is not empty. | Checked if `$contentRequired` is `true`. |
+| `assertJson($body)` | Validates that the content body is valid JSON. | Checked if `$jsonRequired` is `true`. |
+| `assertEquals(200, $status)` | Ensures the HTTP status code is 200 (OK). | Checked if `$errorExpected` is `false`. |
+| `assertNotEquals(200, $status)` | Ensures the HTTP status code is not 200. | Checked if `$errorExpected` is `true`. |
+| `assertArrayHasKey('error', $data)` | Checks if the `error` key exists in the data array. | Checked if `$errorExpected` is `true`. |
+| `assertArrayNotHasKey('error', $data)` | Checks if the `error` key does not exist in the data array. | Checked if `$errorExpected` is `false`. |
+| `assertTrue($errorExpected)` | Verifies that `$errorExpected` is `true`. | Checked during exception handling. |
 
 ## Contributing
 
