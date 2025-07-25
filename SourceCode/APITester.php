@@ -111,13 +111,16 @@ class APITester
 	}
 
 	/**
-	 * Test API end point method.
+	 * Api end point test method.
 	 *
-	 * @param string                    $method      The HTTP method to use.
-	 * @param string                    $endPoint    The API end point.
-	 * @param null|array<string>|string $data        The JSON data to process.
-	 * @param TestOptions               $testOptions The options object.
-	 *                                               Contains various options.
+	 * @param string                   $method      The HTTP method to use.
+	 * @param string                   $endPoint    The API end point.
+	 * @param null|string|array<mixed> $data        The JSON or form data to
+	 *                                              process.  Can be null,
+	 *                                              string, or various array
+	 *                                              structures.
+	 * @param TestOptions              $testOptions The options object.
+	 *                                              Contains various options.
 	 *
 	 * @throws \Exception If an unexpected exception occurs during the request.
 	 *
@@ -126,7 +129,7 @@ class APITester
 	public function apiEndPointTest(
 		string $method,
 		string $endPoint,
-		null | array | string $data = null,
+		null | string | array $data = null,
 		TestOptions $testOptions = new TestOptions()) : string
 	{
 		$responseContent = null;
