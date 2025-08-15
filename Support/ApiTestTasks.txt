@@ -1,3 +1,4 @@
+ * @param null|string|array<mixed> $data        The JSON data to process.
 Review Namespace, Class Names
 Add Tests for each option in ApiOptions
 Parameter #3 $data of method DigitalZenWorks\ApiTest\PageTester::webPageTest() expects array<string>|string|null, array<int, array<string, int|string>> given. argument.type
