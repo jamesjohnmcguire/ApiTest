@@ -25,14 +25,17 @@ class PageTester extends APITester
 	/**
 	 * Test API end point method.
 	 *
-	 * @param string                    $method        The HTTP method to use.
-	 * @param string                    $endPoint      The API end point.
-	 * @param null|array<string>|string $data          The JSON data to process.
-	 * @param boolean                   $multiPartData Data is multipart form
-	 *                                                 data. Implying some of
-	 *                                                 the data may be binary.
-	 * @param boolean                   $isError       Indicates whether an
-	 *                                                 error is expected or not.
+	 * @param string                   $method        The HTTP method to use.
+	 * @param string                   $endPoint      The API end point.
+	 * @param null|string|array<mixed> $data          The JSON or form data to
+	 *                                                process.  Can be null,
+	 *                                                string, or various array
+	 *                                                structures.
+	 * @param boolean                  $multiPartData Data is multipart form
+	 *                                                data. Implying some of
+	 *                                                the data may be binary.
+	 * @param boolean                  $isError       Indicates whether an
+	 *                                                error is expected or not.
 	 *
 	 * @return string
 	 *
@@ -67,11 +70,14 @@ class PageTester extends APITester
 	/**
 	 * Test web page method.
 	 *
-	 * @param string                    $method      The HTTP method to use.
-	 * @param string                    $endPoint    The API end point.
-	 * @param null|array<string>|string $data        The JSON data to process.
-	 * @param TestOptions               $testOptions The options object.
-	 *                                               Contains various options.
+	 * @param string                   $method      The HTTP method to use.
+	 * @param string                   $endPoint    The API end point.
+	 * @param null|string|array<mixed> $data        The JSON or form data to
+	 *                                              process.  Can be null,
+	 *                                              string, or various array
+	 *                                              structures.
+	 * @param TestOptions              $testOptions The options object.
+	 *                                              Contains various options.
 	 *
 	 * @throws \Exception If an unexpected exception occurs during the request.
 	 *
