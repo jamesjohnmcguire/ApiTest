@@ -1,2 +1,4 @@
+Expose Client
+Expose CookieJar	Cookies	$client = $this->pageTester->client;	$cookieJar = $this->pageTester->cookieJar;
 Review Namespace, Class Names
 Add Tests for each option in ApiOptions
