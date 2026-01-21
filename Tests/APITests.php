@@ -15,16 +15,10 @@ declare(strict_types=1);
 
 namespace DigitalZenWorks\ApiTest\Tests;
 
-$root = dirname(__DIR__, 1);
-
-require_once $root . '/vendor/autoload.php';
-require_once 'AbstractTestBase.php';
-
 use DigitalZenWorks\ApiTest\TestOptions;
 use DigitalZenWorks\ApiTest\APITester;
 use DigitalZenWorks\ApiTest\PageTester;
 use GuzzleHttp\Cookie\CookieJar;
-
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -92,7 +86,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Sanity check test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('basic')]
@@ -106,7 +100,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Get success test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('get')]
@@ -133,7 +127,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Not found status test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('not-found')]
@@ -155,7 +149,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Post success test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('post')]
@@ -166,7 +160,7 @@ final class APITests extends AbstractTestBase
 
 		$data =
 		[
-			'name' => 'SomeUser',
+			'name'  => 'SomeUser',
 			'email' => 'somebody@example.com'
 		];
 
@@ -175,7 +169,10 @@ final class APITests extends AbstractTestBase
 		$options->requestDataType = 'form_params';
 
 		$response = $this->apiTester->apiEndPointTest(
-			'POST', $endPoint, $data, $options);
+			'POST',
+			$endPoint,
+			$data,
+			$options);
 
 		$this->assertNotEmpty($response);
 
@@ -193,7 +190,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Post success test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('post')]
@@ -204,7 +201,7 @@ final class APITests extends AbstractTestBase
 
 		$data =
 		[
-			'name' => 'SomeUser',
+			'name'  => 'SomeUser',
 			'email' => 'somebody@example.com'
 		];
 
@@ -213,7 +210,10 @@ final class APITests extends AbstractTestBase
 		$options->requestDataType = 'json';
 
 		$response = $this->apiTester->apiEndPointTest(
-			'POST', $endPoint, $data, $options);
+			'POST',
+			$endPoint,
+			$data,
+			$options);
 
 		$this->assertNotEmpty($response);
 
@@ -231,7 +231,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Post success additional data test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('post')]
@@ -247,7 +247,10 @@ final class APITests extends AbstractTestBase
 		$options->requestDataType = 'body';
 
 		$response = $this->apiTester->apiEndPointTest(
-			'POST', $endPoint, $jsonData, $options);
+			'POST',
+			$endPoint,
+			$jsonData,
+			$options);
 
 		$this->assertNotEmpty($response);
 
@@ -265,7 +268,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Post success additional data test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('post')]
@@ -295,7 +298,10 @@ final class APITests extends AbstractTestBase
 		$options->guzzleAdditionalOptions = $guzzleAdditionalOptions;
 
 		$response = $this->apiTester->apiEndPointTest(
-			'POST', $endPoint, $jsonData, $options);
+			'POST',
+			$endPoint,
+			$jsonData,
+			$options);
 
 		$this->assertNotEmpty($response);
 
@@ -313,7 +319,7 @@ final class APITests extends AbstractTestBase
 
 	/**
 	 * Post success additional data test.
-	 * 
+	 *
 	 * @return void
 	 */
 	#[Group('post')]
