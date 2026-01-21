@@ -3,20 +3,26 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 cd ..
 
-composer validate --strict
+echo Checking composer...
 composer install --prefer-dist
+composer validate --strict
 echo outdated:
 composer outdated --direct
 
+echo
 echo Checking syntax...
 vendor/bin/parallel-lint --exclude .git --exclude Support --exclude vendor .
 
-echo Checking code styles...
-vendor/bin/phpcs -sp --standard=ruleset.xml SourceCode
-
+echo
+echo Code Analysis...
 vendor/bin/phpstan.phar analyse
 
-vendor/bin/phpunit -c Tests/phpunit.xml
+echo
+echo Checking code styles...
+vendor/bin/phpcs -sp --standard=ruleset.xml SourceCode
+vendor/bin/phpcs -sp --standard=ruleset.tests.xml Tests
+
+vendor/bin/phpunit --config Tests/phpunit.xml
 
 if [[ $1 == "release" ]] ; then
 	echo "Release is set..."

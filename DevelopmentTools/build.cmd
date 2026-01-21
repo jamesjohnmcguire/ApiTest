@@ -1,28 +1,33 @@
+@ECHO OFF
+
 CD %~dp0
 CD ..
 
-:complete
-CALL composer validate --strict
+ECHO Checking composer...
 CALL composer install --prefer-dist
+CALL composer validate --strict
 ECHO outdated:
 CALL composer outdated --direct
 
 ECHO Checking syntax...
 CALL vendor/bin/parallel-lint --exclude .git --exclude Support --exclude vendor .
 
-ECHO Checking code styles...
-php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
+ECHO Code Analysis...
 CALL vendor\bin\phpstan.phar.bat analyse
 
-ECHO Testing...
-CD DevelopmentTools
-CALL UnitTests.cmd
+ECHO Checking code styles...
+CALL php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
+CALL vendor\bin\phpcs.bat -sp --standard=ruleset.tests.xml Tests
 
-IF "%1"=="release" GOTO release
+ECHO Running Automated Tests
+CD DevelopmentTools
+CALL vendor\bin\phpunit --config Tests\phpunit.xml
+
+IF "%1"=="release" GOTO deploy
 GOTO finish
 
-:release
-ECHO Release is set...
+:deploy
+ECHO Deploying...
 if "%~2"=="" GOTO error
 
 IF EXIST digitalzenworks-apitest.zip DEL /Q digitalzenworks-apitest.zip
