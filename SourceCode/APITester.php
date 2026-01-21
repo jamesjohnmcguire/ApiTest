@@ -68,6 +68,11 @@ class APITester
 	 */
 	public Client $client;
 
+	/**
+	 * Cookie jar object.
+	 *
+	 * @var \GuzzleHttp\Cookie\CookieJar
+	 */
 	public \GuzzleHttp\Cookie\CookieJar $cookieJar;
 
 	/**
@@ -104,7 +109,7 @@ class APITester
 		$options =
 		[
 			'base_uri' => $host,
-			'cookies'   => $this->cookieJar,
+			'cookies'  => $this->cookieJar,
 			'headers'  =>
 			[
 				'Content-Type' => $this->requestContentType,
