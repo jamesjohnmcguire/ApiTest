@@ -66,7 +66,9 @@ class APITester
 	 *
 	 * @var Client
 	 */
-	private Client $client;
+	public Client $client;
+
+	public \GuzzleHttp\Cookie\CookieJar $cookieJar;
 
 	/**
 	 * Response content data type.
@@ -97,9 +99,12 @@ class APITester
 		$this->requestContentType = $requestContentType;
 		$this->responseContentType = $responseContentType;
 
+		$this->cookieJar = new \GuzzleHttp\Cookie\CookieJar();
+
 		$options =
 		[
 			'base_uri' => $host,
+			'cookies'   => $this->cookieJar,
 			'headers'  =>
 			[
 				'Content-Type' => $this->requestContentType,
