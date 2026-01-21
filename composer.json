@@ -24,9 +24,9 @@
 	},
 	"config": {
 		"allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true
-        },
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpstan/extension-installer": true
+		},
 		"process-timeout": 0
 	},
 	"minimum-stability": "dev",
@@ -34,9 +34,9 @@
 	"type": "library",
 	"require":
 	{
+		"php": "^7.4 || ^8.0",
 		"php-http/guzzle7-adapter": "^1.0",
-		"phpunit/phpunit": "^11.0 || ^12.0",
-		"roave/security-advisories": "dev-master"
+		"phpunit/phpunit": "^11.0 || ^12.0"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "*",
@@ -45,9 +45,11 @@
 		"phpcompatibility/php-compatibility": "*",
 		"phpcsstandards/phpcsdevtools": "^1.0",
 		"phpcsstandards/phpcsextra": "^1.2.0",
+		"phpmd/phpmd": "^2.15",
 		"phpstan/extension-installer": "^1.4",
-		"phpstan/phpstan": "^2.0",
+		"phpstan/phpstan": "^2.1",
 		"phpstan/phpstan-deprecation-rules": "^2.0",
+		"roave/security-advisories": "dev-master",
 		"squizlabs/php_codesniffer": "*"
 	}
 }
