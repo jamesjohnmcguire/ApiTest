@@ -1,4 +1,4 @@
-.vscode/
-*.code-workspace
-
+/.vscode/
 /vendor/
+
+*.code-workspace
