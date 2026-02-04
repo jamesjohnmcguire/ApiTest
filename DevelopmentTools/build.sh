@@ -24,7 +24,7 @@ vendor/bin/phpcs -sp --standard=ruleset.tests.xml Tests
 
 echo
 echo Running Automated Tests
-vendor/bin/phpunit --config Tests/phpunit.xml
+vendor/bin/phpunit --configuration Tests/phpunit.xml
 
 if [[ $1 == "release" ]] ; then
 	echo
