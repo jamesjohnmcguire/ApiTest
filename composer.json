@@ -1,12 +1,18 @@
 {
     "name": "digitalzenworks/api-test",
+	"description": "A library for end to end testing web APIs with PHPUnit.",
+	"homepage": "https://github.com/jamesjohnmcguire/ApiTest/",
+	"keywords": ["API Tester", "End to End"],
+	"license": "MIT",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"type": "library",
 	"authors": [
 		{
 			"name": "James John McGuire",
 			"email": "jamesjohnmcguire@gmail.com"
 		}
 	],
-	"description": "A library for end to end testing web APIs with PHPUnit.",
 	"funding":
 	[
 		{
@@ -14,9 +20,6 @@
 			"url": "https://github.com/sponsors/jamesjohnmcguire"
 		}
 	],
-	"homepage": "https://github.com/jamesjohnmcguire/ApiTest/",
-	"keywords": ["API Tester", "End to End"],
-	"license": "MIT",
 	"autoload": {
 		"psr-4": {
 			"DigitalZenWorks\\ApiTest\\": "SourceCode/"
@@ -29,9 +32,6 @@
 		},
 		"process-timeout": 0
 	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"type": "library",
 	"require":
 	{
 		"php": "^7.4 || ^8.0",
