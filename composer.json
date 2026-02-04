@@ -51,5 +51,8 @@
 		"phpstan/phpstan-deprecation-rules": "^2.0",
 		"roave/security-advisories": "dev-master",
 		"squizlabs/php_codesniffer": "*"
+	},
+	"scripts": {
+		"test": "vendor/bin/phpunit --configuration Tests/phpunit.xml"
 	}
 }
