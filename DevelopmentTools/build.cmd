@@ -19,7 +19,7 @@ CALL vendor\bin\phpstan.phar.bat analyse
 
 ECHO .
 ECHO Checking Code Styles...
-CALL php vendor\bin\phpcs -sp --standard=ruleset.xml SourceCode
+CALL vendor\bin\phpcs.bat -sp --standard=ruleset.xml SourceCode
 CALL vendor\bin\phpcs.bat -sp --standard=ruleset.tests.xml Tests
 
 ECHO Running Automated Tests
