@@ -11,6 +11,8 @@ Please :star: star this project!
 
 This requirement could potentially be relaxed to older version of PHP upon request.
 
+* [php-http/guzzle7-adapter >= 1.0](https://github.com/php-http/guzzle7-adapter)
+
 * [PHPUnit >= 11 || 12 || 13](https://phpunit.de/)
 
 
@@ -157,6 +159,8 @@ You can also access the Guzzle history (handler) object by accessing the public 
     $this->assertEquals(1, $redirects);
 ```
 
+This can be useful for tracking redirects, among other things.
+
 ### Cookies Support
 
 This now supports cookies over multiple calls.
@@ -165,8 +169,6 @@ This now supports cookies over multiple calls.
 ```
     $cookieJar = $pageTester->cookieJar;
 ```
-
-This can be useful for tracking redirects, among other things.
 
 ### Details on `tryBasicAsserts`
 
