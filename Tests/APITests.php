@@ -15,9 +15,9 @@ declare(strict_types=1);
 
 namespace DigitalZenWorks\ApiTest\Tests;
 
-use DigitalZenWorks\ApiTest\TestOptions;
 use DigitalZenWorks\ApiTest\APITester;
 use DigitalZenWorks\ApiTest\PageTester;
+use DigitalZenWorks\ApiTest\TestOptions;
 use GuzzleHttp\Cookie\CookieJar;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
