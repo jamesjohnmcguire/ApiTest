@@ -7,9 +7,11 @@ Please :star: star this project!
 
 ### Requirements/dependencies
 
-* [PHP >= 8.1.1](http://php.net/)
+* [PHP >= 8.1.1](https://php.net/)
 
 This requirement could potentially be relaxed to older version of PHP upon request.
+
+* [PHPUnit >= 11 || 12 || 13](https://phpunit.de/)
 
 
 ## Installation
@@ -128,6 +130,11 @@ You can refer to the unit tests for additional example usage.
 ## Additional Notes
 This uses Guzzle to process the API request.
 
+You can now directly access the Guzzle client with:
+```
+$guzzleClient = $pageTester->client;
+```
+
 ### Guzzle Response Object
 
 You can access the Guzzle response object by accessing the public $response property of PageTester. like:
@@ -148,6 +155,15 @@ You can also access the Guzzle history (handler) object by accessing the public 
     $history = $pageTester->history;
     $redirects = count($history) - 1;
     $this->assertEquals(1, $redirects);
+```
+
+### Cookies Support
+
+This now supports cookies over multiple calls.
+ You can also access the cookies by accessing the public $cookies property of PageTester.
+
+```
+    $cookieJar = $pageTester->cookieJar;
 ```
 
 This can be useful for tracking redirects, among other things.
@@ -179,7 +195,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request
 
 ### Coding style
-Please match the current coding style.  Most notably:  
+Please match the current coding style.  Most notably:
 1. One operation per line
 2. Use complete English words in variable and method names
 3. Attempt to declare variable and method names in a self-documenting manner
