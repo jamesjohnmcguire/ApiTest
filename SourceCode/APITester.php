@@ -106,10 +106,14 @@ class APITester
 
 		$this->cookieJar = new \GuzzleHttp\Cookie\CookieJar();
 
+		// Track the history of requests.
+		$handlerStack = $this->getHandlerStack();
+
 		$options =
 		[
 			'base_uri' => $host,
 			'cookies'  => $this->cookieJar,
+			'handler'  => $handlerStack,
 			'headers'  =>
 			[
 				'Content-Type' => $this->requestContentType,
@@ -438,10 +442,6 @@ class APITester
 		{
 			$options = [$testOptions->requestDataType => $data];
 		}
-
-		// Track the history of requests.
-		$handlerStack = $this->getHandlerStack();
-		$options['handler'] = $handlerStack;
 
 		if ($testOptions->errorExpected === true)
 		{
