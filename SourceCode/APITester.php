@@ -403,9 +403,12 @@ class APITester
 				$code = $response->getStatusCode();
 				echo "Exception code: $code\t$message\n";
 
-				$body = $response->getBody();
-				$contents = $body->getContents();
-				print_r($contents);
+				if ($code !== 404)
+				{
+					$body = $response->getBody();
+					$contents = $body->getContents();
+					print_r($contents);
+				}
 			}
 			else
 			{
