@@ -27,7 +27,7 @@ composer require --dev https://packagist.org/packages/digitalzenworks/api-test
 
 ### API Testing
 
-There is one main class with one main method.  You can call it like this:
+The main core class - ```APITester``` with it's main method - ```apiEndPointTest```.  You can call it like this:
 
 ```php
 require_once 'vendor/autoload.php';
